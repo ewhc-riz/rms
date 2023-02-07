@@ -1,0 +1,259 @@
+<style>
+  @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #fafafa;
+    max-width: 100;
+  }
+
+  p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+  }
+
+  a,
+  a:hover,
+  a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+  }
+
+  .line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+  }
+
+  /* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+  .wrapper {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    opacity: 0.9;
+    transition: all .5s;
+    display: flex;
+    align-items: stretch;
+    max-height: 100%;
+
+
+  }
+
+  #sidebar {
+    min-width: 250px;
+    width: 20%;
+    background: #6d5192;
+
+    color: #f3f3f3;
+    transition: all 0.3s;
+    border-right: #222222 1px;
+
+  }
+
+  #sidebar.active {
+    margin-left: -250px;
+    width: 0%;
+  }
+
+  #sidebar .sidebar-header {
+    padding: 20px;
+    background: #222222;
+  }
+
+  #sidebar ul.components {
+    padding: 20px 0;
+
+  }
+
+  #sidebar ul p {
+    color: #fff;
+    padding: 10px;
+  }
+
+  #sidebar ul li a {
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Poppins';
+    display: block;
+  }
+
+  #sidebar ul li a:hover {
+    color: #222222;
+    background: #ddd;
+  }
+
+  #sidebar ul li.active>a,
+  a[aria-expanded="true"] {
+    color: #000;
+    background-color: #ddd;
+  }
+
+  a[data-toggle="collapse"] {
+    position: relative;
+  }
+
+  .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+  }
+
+  ul ul a {
+    font-size: small;
+    padding-left: 30px !important;
+    background: white;
+  }
+
+  ul.CTAs {
+    padding: 20px;
+  }
+
+  ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+
+  a.download {
+    background: #fff;
+    color: #7386D5;
+  }
+
+  a.article,
+  a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+  }
+
+  /* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+  #content {
+    width: 80%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    align-items: stretch;
+    margin-bottom: 20px;
+    border: 1px #000;
+  }
+
+  #content.active {
+    width: 100%;
+  }
+
+  /* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+  @media (max-width: 768px) {
+    #sidebar {
+      margin-left: -250px;
+    }
+
+
+    #sidebar.active {
+      margin-left: 0;
+    }
+
+    #sidebarCollapse span {
+      display: none;
+    }
+  }
+</style>
+
+
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+
+
+    <ul class="list-unstyled components">
+      <li routerLinkActive="active" *ngIf="this.isLogin">
+        <a [routerLink]="['/main']"><i class="fa-solid fa-home"></i> Dashboard</a>
+        <hr />
+      </li>
+      <li routerLinkActive="active" *ngIf="this.isLogin">
+        <a [routerLink]="['/add-franchise']"><i class="fa fa-plus"></i> Add Recon</a>
+      </li>
+
+
+
+      <!-- <li routerLinkActive="active" *ngIf="this.isLogin">
+        <a [routerLink]="['/transfer-franchise']"><i class="fa-solid fa-arrow-right-arrow-left"></i> Transfer
+          Franchise</a>
+      </li> -->
+
+      <!-- <li routerLinkActive="active" *ngIf="userInfo.user_level != 'SALES' && this.isLogin">
+        <a [routerLink]="['/agent-brokers']">
+          <i class="fa-sharp fa-solid fa-people-group"></i> 
+          Agents & Brokers</a>
+      </li> -->
+      <li routerLinkActive="active" *ngIf="this.isLogin && userInfo.user_level == 'ADMINISTRATOR'">
+        <a [routerLink]="['/users']"><i class="fa fa-user-plus"></i> Users</a>
+      </li>
+
+
+
+      <li *ngIf="this.isLogin">
+        <a href="" (click)='logOut()'><i class="fa fa-key"></i> Logout</a>
+      </li>
+      <li *ngIf="!this.isLogin">
+        <a href=""><i class="fa fa-key"></i> Login</a>
+      </li>
+    </ul>
+  </nav>
+
+
+
+  <!-- Page Content  -->
+  <div id="content">
+    <div class="row">
+      <div class="col-md-6">
+        <h4 style="font-family: 'Roboto';">
+          <button id="sidebarCollapse" class="btn">
+             <i class="fa-sharp fa-solid fa-bars"></i>
+          </button>
+          <b> Recon Monitoring System   
+             </b> 
+        </h4>
+
+      </div>
+      <div *ngIf="isLogin" class="col-md-6" style="text-align: right;">
+        <i class="fa-solid fa-bell"></i> {{'Welcome! ' + userInfo.firstname}}
+      </div>
+
+    </div>
+    <hr />
+    <router-outlet></router-outlet>
+  </div>
+  <app-spinner></app-spinner>
+</div>

@@ -1,0 +1,298 @@
+<!-- Button trigger modal -->
+<h5>
+  User Maintenance
+  <hr />
+</h5>
+
+<!--Add Modal -->
+<div
+  class="modal fade"
+  id="modalAddUser"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header mb-2">
+        <h1 class="modal-title" id="exampleModalLabel">
+          <strong> Add User </strong>
+        </h1>
+        <hr />
+        <button
+          style="cursor: pointer"
+          type="button"
+          class="btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage != ''" class="alert alert-danger">
+        <i class="fa-solid fa-circle-xmark"></i>
+        <span class="text-danger fw-bold"> {{ errorMessage }}</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="card-body">
+          <form
+            class="row g-3"
+            id="registrationForm"
+            #registrationForm="ngForm"
+            (ngSubmit)="
+              registrationForm.form.valid && saveUser(registrationForm)
+            "
+            novalidate
+          >
+            <div class="row">
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <input
+                    type="text"
+                    id="firstname"
+                    name="firstname"
+                    class="form-control form-control-md border-secondary"
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    ngModel
+                    required
+                  />
+                  <label class="form-label" for="firstname">First Name</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    class="form-control form-control-md border-secondary"
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    ngModel
+                    required
+                  />
+                  <label class="form-label" for="lastname">Last Name</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12 mb-1 pb-2">
+                <div class="form-outline">
+                  <input
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    type="email"
+                    name="email"
+                    id="email"
+                    class="form-control form-control-md border-secondary"
+                    ngModel
+                    required
+                  />
+                  <label class="form-label" for="email">Email</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <select
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    class="form-select form-select-md border-secondary"
+                    name="user_level"
+                    id="user_level"
+                    ngModel
+                    required
+                  >
+                    <option value="BASIC USER">BASIC USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
+                  <label class="form-label" for="user_level">User Access</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <select
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    class="form-select form-select-md border-secondary"
+                    name="department"
+                    id="department"
+                    ngModel
+                    required
+                  >
+                    <option value="PROVIDER">MEDICAL PROVIDER</option>
+                    <option value="I.T">INFORMATION TECHNOLOGY</option>
+                    <option value="CLAIMS">CLAIMS</option>
+                  </select>
+                  <label class="form-label" for="department">Department</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <input
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    [(ngModel)]="user_password"
+                    name="user_password"
+                    type="password"
+                    id="user_password"
+                    class="form-control form-control-md border-secondary"
+                    required
+                  />
+                  <label class="form-label" for="user_password">Password</label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-1">
+                <div class="form-outline">
+                  <input
+                    [ngClass]="{ 'is-invalid': registrationForm.submitted }"
+                    [(ngModel)]="confirm_password"
+                    name="confirmPassWord"
+                    (ngModelChange)="
+                      checkPasswords(user_password, confirm_password)
+                    "
+                    type="password"
+                    id="confirm_password"
+                    class="form-control form-control-md border-secondary"
+                    required
+                  />
+                  <label class="form-label" for="confirmPassWord"
+                    >Confirm Password</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-md-6 mb-1 pb-2">
+                <div class="form-group">
+                  <select [ngClass]="{ 'is-invalid': registrationForm.submitted}"
+                    class="form-select form-select-md border-secondary" name="user_level" id="user_level" ngModel
+                    required>
+                    <option value="PROVIDER">PROVIDER</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
+                  <label class="form-label" for="user_level">User Access</label>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="mt-4 pt-2">
+              <button class="btn btn-dark" type="submit" id="saveUser">
+                <i class="fa fa-user-plus"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="">
+  <div class="row">
+    <div class="col">
+      <button
+        type="button"
+        class="btn btn-sm btn-dark"
+        data-bs-toggle="modal"
+        data-bs-target="#modalAddUser"
+      >
+        <i class="fa fa-user-plus"></i> Add User
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive" style="padding-top: 10px">
+    <table class="table table-hover" style="font-size: smaller">
+      <thead class="table-dark">
+        <tr>
+          <th></th>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>User Email</th>
+          <th>Department</th>
+          <th>User Level</th>
+          <th class="stickycol align-middle text-center bg-dark">View</th>
+          <th>ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let u of userList | paginate : config"
+          (dblclick)="deleteUser(u.id)"
+        >
+          <td>
+            <a
+              style="cursor: pointer"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Delete"
+              (click)="deleteUser(u.id)"
+              ><i class="fa-solid fa-trash"></i
+            ></a>
+          </td>
+          <td>{{ u.firstname }}</td>
+          <td>{{ u.lastname }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.department }}</td>
+          <td>{{ u.user_level }}</td>
+          <td class="stickycol align-middle text-center">
+            <a [routerLink]="['/users/', u.id]">
+              <i class="fa-sharp fa-solid fa-eye"></i> View</a
+            >
+          </td>
+          <td>{{ u.id }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal for Edit     -->
+
+<!--
+
+  Pagination
+
+-->
+<div class="row">
+  <div class="col" style="text-align: right; font-size: smaller">
+    <select [(ngModel)]="config.itemsPerPage">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    {{ config.currentPage * config.itemsPerPage + " of " + config.totalItems }}
+  </div>
+  <div class="col-auto">
+    <pagination-template
+      #p="paginationApi"
+      [id]="config.id"
+      (pageChange)="config.currentPage = $event"
+    >
+      <div class="custom-pagination">
+        <div class="pagination-next ms-4" *ngIf="p.isLastPage()">
+          <span><i class="fa fa-solid fa-angle-right disabled"></i> </span>
+        </div>
+        <div class="pagination-next ms-4" *ngIf="!p.isLastPage()">
+          <span (click)="p.next()"
+            ><i class="fa-solid fa-angle-right"></i>
+          </span>
+        </div>
+
+        <div class="pagination-previous ms-4" *ngIf="p.isFirstPage()">
+          <span> <i class="fa fa-solid fa-angle-left disabled"></i> </span>
+        </div>
+        <div class="pagination-previous ms-4" *ngIf="!p.isFirstPage()">
+          <span (click)="p.previous()">
+            <i class="fa fa-solid fa-angle-left"></i>
+          </span>
+        </div>
+      </div>
+    </pagination-template>
+  </div>
+</div>

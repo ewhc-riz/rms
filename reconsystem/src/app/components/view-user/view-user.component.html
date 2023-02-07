@@ -1,0 +1,193 @@
+<h5>
+  Update User Info
+  <hr style="padding-bottom: 3px" />
+</h5>
+
+<div *ngIf="errorMessage != ''" class="alert alert-danger">
+  <i class="fa-solid fa-circle-xmark"></i>
+  <span class="text-danger fw-bold"> {{ errorMessage }}</span>
+</div>
+<div *ngIf="successMessage != ''" class="alert alert-success">
+  <i class="fa-solid fa-check"></i>
+  <span class="text-success fw-bold"> {{ successMessage }}</span>
+</div>
+
+<div class="card-body mt-5">
+  <form
+    class="row g-3"
+    id="registrationForm"
+    [formGroup]="userForm"
+    (ngSubmit)="saveUser()"
+    novalidate
+  >
+    <input type="hidden" formControlName="id" name="id" id="id" />
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <label
+          for="firstname"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">Firstname</span>
+        </label>
+        <input
+          [ngClass]="{ 'is-invalid': userForm.controls['firstname'].errors }"
+          type="text"
+          id="firstname"
+          name="firstname"
+          formControlName="firstname"
+          class="form-control form-control-md border-secondary"
+          required
+        />
+      </div>
+      <div class="col-md-6 mb-4">
+        <label
+          for="lastname"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">Lastname</span>
+        </label>
+        <input
+          [ngClass]="{ 'is-invalid': userForm.controls['lastname'].errors }"
+          type="text"
+          name="lastname"
+          id="lastname"
+          formControlName="lastname"
+          class="form-control form-control-md border-secondary"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-4 pb-2">
+        <label
+          for="email"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">Email</span>
+        </label>
+        <input
+          [ngClass]="{ 'is-invalid': userForm.controls['email'].errors }"
+          type="email"
+          name="email"
+          id="email"
+          formControlName="email"
+          class="form-control form-control-md border-secondary"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <label
+          for="user_level"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">User Level</span>
+        </label>
+        <select
+          [ngClass]="{ 'is-invalid': userForm.controls['user_level'].errors }"
+          class="form-select form-select-md border-secondary"
+          name="user_level"
+          id="user_level"
+          formControlName="user_level"
+        >
+          <option value="BASIC USER">BASIC USER</option>
+          <option value="ADMINISTRATOR">ADMINISTRATOR</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-4">
+        <label
+          for="department"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">Department</span>
+        </label>
+        <select
+          [ngClass]="{ 'is-invalid': userForm.controls['department'].errors }"
+          class="form-select form-select-md border-secondary"
+          name="department"
+          id="department"
+          formControlName="department"
+        >
+          <option value="PROVIDER">MEDICAL PROVIDER</option>
+          <option value="I.T">INFORMATION TECHNOLOGY</option>
+          <option value="CLAIMS">CLAIMS</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <label
+          for="user_password"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">Password</span>
+        </label>
+        <input
+          placeholder="[UNCHANGED]"
+          name="user_password"
+          formControlName="user_password"
+          type="password"
+          id="user_password"
+          class="form-control form-control-md border-secondary"
+          [(ngModel)]="user_password"
+        />
+      </div>
+      <div class="col-md-6 mb-4">
+        <label
+          for="firstname"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1"
+            >Confirm Password</span
+          >
+        </label>
+        <input
+          [(ngModel)]="confirm_password"
+          (ngModelChange)="checkPasswords(user_password, confirm_password)"
+          formControlName="confirm_password"
+          name="confirmPassWord"
+          type="password"
+          id="confirm_password"
+          class="form-control form-control-md border-secondary"
+        />
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6 mb-4 pb-2">
+        <label
+          for="user_level"
+          class="ms-2 position-absolute"
+          style="margin-top: -0.95rem !important"
+        >
+          <span class="h6 small bg-white text-muted px-1">User Level</span>
+        </label>
+        <select
+          [ngClass]="{ 'is-invalid': userForm.controls['user_level'].errors }"
+          class="form-select form-select-md border-secondary"
+          name="user_level"
+          id="user_level"
+          formControlName="user_level"
+        >
+          <option value="PROVIDER">PROVIDER</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </div>
+    </div> -->
+    <div class="mt-1">
+      <button class="btn btn-dark" type="submit" id="saveUser">
+        <i class="fa fa-thin fa-square-pen"></i> Update
+      </button>
+    </div>
+  </form>
+</div>

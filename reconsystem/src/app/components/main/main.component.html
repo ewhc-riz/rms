@@ -1,0 +1,127 @@
+<form [formGroup]="searchForm">
+    <mat-form-field appearance="outline" floatLabel="always" class="m-2">
+        <mat-label>Search Company Name</mat-label>
+        <input matInput [(ngModel)]="searchStr" formControlName="companyName" name="companyName" type="text"
+            id="searchStr" placeholder="Search Account Name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" floatLabel="always" class="m-2">
+        <mat-label>Date Range</mat-label>
+        <select id="searchDate" matNativeControl placeholder="Select Criteria" formControlName="dtCriteria"
+            name="dtCriteria">
+            <option selected>Date Criteria</option>
+            <option value="datereq">Request Date</option>
+            <option value="dateapp">Approve Date</option>
+        </select>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline" floatLabel="always" class="m-2">
+        <mat-label>From Date</mat-label>
+        <input matInput [matDatepicker]="picker1" placeholder="Start Date" formControlName="fromDate" name="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field color="accent" appearance="outline" floatLabel="always" class="m-2">
+        <mat-label>To Date</mat-label>
+        <input matInput [matDatepicker]="picker2" placeholder="End Date" formControlName="toDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 color="primary"></mat-datepicker>
+    </mat-form-field>
+
+
+    <button type="button" data-bs-toggle="tooltip" data-bs-title="Search" class="btn btn-dark m-2"><i
+            class="fa-solid fa-magnifying-glass" (click)="filterList()"></i></button>
+
+    <button type="button" data-bs-toggle="tooltip" data-bs-title="Download Excel" class="btn btn-dark"><i
+            class="fa-solid fa-file-excel"></i></button>
+</form>
+<div class="table-responsive">
+    <table class="table table-sm" style="font-size: smaller;">
+        <thead class="table-bordered align-middle">
+            <tr>
+                <th class="align-middle">#</th>
+                <th class="stickycol align-middle" style="width: 50%;">Company</th>
+                <th class="align-middle">Date Request</th>
+                <th class="align-middle">Franchise Code</th>
+                <th class="align-middle">Column 5</th>
+                <th class="align-middle">Column 6</th>
+                <th class="align-middle">Column 7</th>
+                <th class="align-middle">Column 8</th>
+                <th class="align-middle">Column 9</th>
+                <th class="align-middle">Column 10</th>
+                <th class="align-middle">Column 11</th>
+                <th class="align-middle">Column 12</th>
+                <th class="align-middle">Column 13</th>
+                <th class="stickycol align-middle text-center">ID</th>
+ 
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let f of filteredList  | paginate : config; ">
+                <td>{{f.rownum}}</td>
+                <td class="stickycol">{{f.companyName}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.franchiseCode}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                 <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
+                <td class="stickycol align-middle" style="text-align: right; ">{{f.id}}</td>
+ 
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row">
+
+    <div class="col" style="text-align: right; font-size: smaller;">
+        <select [(ngModel)]="config.itemsPerPage">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+        <span *ngIf="(config.currentPage * config.itemsPerPage) < config.totalItems">
+            {{
+            (config.currentPage * config.itemsPerPage) + ' of ' + config.totalItems
+            }}
+        </span>
+        <span *ngIf="(config.currentPage * config.itemsPerPage) >= config.totalItems">
+            {{
+            config.totalItems + ' of ' + config.totalItems
+            }}
+        </span>
+
+    </div>
+    <div class="col-auto">
+
+        <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+
+            <div class="custom-pagination">
+                <div class="pagination-next ms-4" [class.disabled]="p.isLastPage()">
+                    <span *ngIf="!p.isLastPage()" (click)="p.next()"><i class="fa-solid fa-angle-right"></i>
+                    </span>
+                </div>
+                <div class="pagination-previous ms-4" *ngIf="p.isFirstPage()">
+
+                    <span (click)="p.previous()">
+                        <i class="fa fa-solid fa-angle-left disabled"></i> </span>
+                </div>
+                <div class="pagination-previous ms-4" *ngIf="!p.isFirstPage()">
+
+                    <span (click)="p.previous()">
+                        <i class="fa-solid fa-angle-left"></i> </span>
+                </div>
+
+            </div>
+
+        </pagination-template>
+
+    </div>
+
+
+</div>

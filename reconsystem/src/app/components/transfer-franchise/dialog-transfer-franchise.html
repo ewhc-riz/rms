@@ -1,0 +1,43 @@
+<form [formGroup]="requestForm" enctype="multipart/form-data" class="col-md-12" (ngSubmit)="sendTransferRequest()">
+    <div class="container-fluid">
+    <div class="row align-top">
+        <h3 mat-dialog-title>Transfer</h3>
+        <mat-dialog-content width="700">
+                <mat-form-field appearance="outline" floatLabel="always" class="col-md-12">
+                    <mat-label>Search Company Name</mat-label>
+                    <input placeholder="Type Company Name" matInput formControlName="selectedFranchise" [matAutocomplete]="auto"
+                        name="myControl">
+                    <button *ngIf="requestForm.controls['selectedFranchise'].value" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="clearSelection()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayCompanyName">
+                        <mat-option *ngFor="let fr of filteredFranchiseList | async" [value]="fr">
+                            {{fr.companyName}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+        
+                <mat-form-field appearance="outline" floatLabel="always" class="col-md-12">
+                    <mat-label>Upload BOR</mat-label>
+                    <input type="file" matInput class="form-control" formControlName="file" (change)="fileChange($event)"
+                        required />
+                </mat-form-field>
+        
+        </mat-dialog-content>
+        
+    </div>
+    <div mat-dialog-actions class="row" align="end" style="vertical-align: bottom;">
+      <div class="col-md-12 text-right">
+        <button type="submit" mat-raised-button ><i
+            class="fa-solid fa-arrow-right-arrow-left"></i> Request Transfer</button>
+    <button mat-raised-button mat-dialog-close>
+        <i class="fa-sharp fa-solid fa-xmark"></i> Close
+    </button>
+
+      </div>
+        
+    </div></div>
+</form>
+  
+
