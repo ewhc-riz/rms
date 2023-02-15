@@ -1,0 +1,118 @@
+<div class="">
+  <div class="row">
+    <div class="col">
+      <button mat-raised-button (click)="openDialog()" class="mb-4">
+        <i class="fa-sharp fa-solid fa-plus"></i> New
+      </button>
+      <button
+        type="button"
+        class="btn btn-sm btn-dark"
+        style="float:right"
+      >
+        <i class="fa fa-upload" aria-hidden="true"></i> Upload Multiple
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive" style="padding-top: 10px">
+    <table class="table table-hover" style="font-size: small">
+      <thead class="table-dark">
+        <tr>
+          <th></th>
+          <th>Hospital</th>
+          <th>Date Emailed</th>
+          <th>Amount</th>
+          <th>Acknowledgement</th>
+          <th>Status</th>
+          <th>Team Aiko</th>
+          <th>Action Plan</th>
+          <th>Follow-up Email</th>
+          <th>Action Plan</th>
+          <th>Accounting</th>
+          <th>Action Plan</th>
+          <th>Due Date</th>
+          <th>Remarks</th>
+          <th class="stickycol align-middle text-center bg-dark">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let recon of reconList | paginate : config"
+          (dblclick)="deleteRecon(recon.id)"
+        >
+          <td>
+            <a
+              style="cursor: pointer"
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Delete"
+              (click)="deleteRecon(recon.id)"
+              ><i class="fa-solid fa-trash"></i
+            ></a>
+          </td>
+          <td>{{ recon.hospital }}</td>
+          <td>{{ recon.date_emailed | date }}</td>
+          <td>{{ recon.amount }}</td>
+          <td>{{ recon.ack}}</td>
+          <td>{{ recon.ack_status}}</td>
+          <td>{{ recon.initial_ass}}</td>
+          <td>{{ recon.initial_plan}}</td>
+          <td>{{ recon.follow_up}}</td>
+          <td>{{ recon.follow_plan}}</td>
+          <td>{{ recon.accounting}}</td>
+          <td>{{ recon.acc_plan}}</td>
+          <td>{{ recon.due_date}}</td>
+          <td>{{ recon.remarks }}</td>
+          <td class="stickycol align-middle text-center">
+            <a [routerLink]="['/recon/', recon.id]">
+              <i class="fa-sharp fa-solid fa-eye"></i> View</a
+            >
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--
+
+  Pagination
+
+-->
+<div class="row">
+  <div class="col" style="text-align: right; font-size: smaller">
+    <select [(ngModel)]="config.itemsPerPage">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    {{ config.currentPage * config.itemsPerPage + " of " + config.totalItems }}
+  </div>
+  <div class="col-auto">
+    <pagination-template
+      #p="paginationApi"
+      [id]="config.id"
+      (pageChange)="config.currentPage = $event"
+    >
+      <div class="custom-pagination">
+        <div class="pagination-next ms-4" *ngIf="p.isLastPage()">
+          <span><i class="fa fa-solid fa-angle-right disabled"></i> </span>
+        </div>
+        <div class="pagination-next ms-4" *ngIf="!p.isLastPage()">
+          <span (click)="p.next()"
+            ><i class="fa-solid fa-angle-right"></i>
+          </span>
+        </div>
+
+        <div class="pagination-previous ms-4" *ngIf="p.isFirstPage()">
+          <span> <i class="fa fa-solid fa-angle-left disabled"></i> </span>
+        </div>
+        <div class="pagination-previous ms-4" *ngIf="!p.isFirstPage()">
+          <span (click)="p.previous()">
+            <i class="fa fa-solid fa-angle-left"></i>
+          </span>
+        </div>
+      </div>
+    </pagination-template>
+  </div>
+</div>

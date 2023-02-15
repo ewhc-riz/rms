@@ -11,7 +11,7 @@
 <hr />
 
 <button mat-raised-button (click)="openDialog()" class="mb-4">
-  <i class="fa-sharp fa-solid fa-plus"></i> Request Franchise
+  <i class="fa-sharp fa-solid fa-plus"></i> Add
 </button>
 
 <div class="mat-elevation-z8 table-responsive mb-1" style="max-height: 60%"   >
@@ -41,7 +41,7 @@
       <td mat-cell *matCellDef="let element" class="stickycol"> {{element.subject}} </td>
     </ng-container>
     <ng-container matColumnDef="acknowledgement">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="stickycol" sticky> Acknowledgement </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="stickycol" hidden> Acknowledgement </th>
       <td mat-cell *matCellDef="let element" class="stickycol" hidden> {{element.acknowledgement}} </td>
     </ng-container>
     <ng-container matColumnDef="remarks">

@@ -1,0 +1,75 @@
+<div class="card-body mt-5">
+    <form
+      class="row g-3"
+      id="reconForm"
+      [formGroup]="reconForm"
+      (ngSubmit)="updateRecon()"
+      novalidate
+    >
+      <input type="hidden" formControlName="id" name="id" id="id" />
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <label
+            for="firstname"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1">Hospital</span>
+          </label>
+          <input
+            [ngClass]="{ 'is-invalid': reconForm.controls['firstname'].errors }"
+            type="text"
+            id="firstname"
+            name="firstname"
+            formControlName="firstname"
+            class="form-control form-control-md border-secondary"
+            
+          />
+        </div>
+        <div class="col-md-6 mb-4">
+          <label
+            for="lastname"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1">Date</span>
+          </label>
+          <input
+            [ngClass]="{ 'is-invalid': reconForm.controls['lastname'].errors }"
+            type="text"
+            name="lastname"
+            id="lastname"
+            formControlName="lastname"
+            class="form-control form-control-md border-secondary"
+           
+          />
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-12 mb-4 pb-2">
+          <label
+            for="email"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1">Amount</span>
+          </label>
+          <input
+            [ngClass]="{ 'is-invalid': reconForm.controls['email'].errors }"
+            type="email"
+            name="email"
+            id="email"
+            formControlName="email"
+            class="form-control form-control-md border-secondary"
+          />
+        </div>
+      </div>
+      <div class="mt-1">
+        <button class="btn btn-dark" type="submit" id="updateRecon">
+          <i class="fa fa-thin fa-square-pen"></i> Update
+        </button>
+      </div>
+    </form>
+  </div>
+  

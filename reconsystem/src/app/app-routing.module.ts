@@ -8,6 +8,8 @@ import { TransferFranchiseComponent } from './components/transfer-franchise/tran
 import { UsersComponent } from './components/users/users.component';
 import { ViewFranchiseComponent } from './components/view-franchise/view-franchise.component';
 import { ViewUserComponent } from './components/view-user/view-user.component';
+import { ReconComponent, UpdateRecon } from './components/recon/recon.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 const routes: Routes = [
   {path: '', component: MainComponent},
@@ -19,9 +21,10 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent},
   {path: 'users/:id', component: ViewUserComponent},
   {path: 'transfer-franchise', component: TransferFranchiseComponent},
+  {path: 'recon', component: ReconComponent},
+  {path: 'recon/:id', component: UpdateRecon},
+  {path: 'reports', component: ReportsComponent},
   
-   
-
 ];
 
 @NgModule({

@@ -102,7 +102,7 @@ export class AddFranchiseComponent implements AfterViewInit, OnInit {
 }
 
 @Component({
-  selector: 'dialog-transfer-franchise',
+  selector: 'dialog-add-franchise',
   templateUrl: './dialog-add-franchise.html',
 })
 export class DialogAddFranchiseRequest {

@@ -29,7 +29,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { AddFranchiseComponent, DialogAddFranchiseRequest } from './components/add-franchise/add-franchise.component';
-import { MatMenuModule} from '@angular/material/menu'
+import { MatMenuModule} from '@angular/material/menu';
+import { AddRecon, ReconComponent, UpdateRecon} from './components/recon/recon.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { MatStepperModule} from '@angular/material/stepper';
+
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD.MM.YYYY'
@@ -52,7 +56,13 @@ const MY_FORMATS = {
     TransferFranchiseComponent,
     DialogTransferFranchiseRequest,
     AddFranchiseComponent,
-    DialogAddFranchiseRequest
+    DialogAddFranchiseRequest,
+    ReconComponent,
+    UpdateRecon,
+    AddRecon,
+    ReportsComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -78,7 +88,8 @@ const MY_FORMATS = {
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatStepperModule
   
 
   ],

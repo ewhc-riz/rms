@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
         this.errorMessage = "";
         this._auth.setDataInLocalStorage('userData', JSON.stringify(res.data));
         this._auth.setDataInLocalStorage('token', res.token);
-        window.location.reload();
         this._router.navigate(['main']);
+        window.location.reload();
       }
       else {
 

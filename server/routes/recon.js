@@ -2,90 +2,80 @@ const express = require("express");
 const router = express.Router();
 const con = require("../config/dbconfig");
 
-
-
-
-
-router.get("/", async function (req, res, next) {
-  const sql = `SELECT * FROM new_recon`;
-  // res.send(await dbFunction.executeQuery(sql));
+router.get("/", function (req, res) {
+  const sql = "SELECT * FROM new_recon";
   con.query(sql, function (err, result, fields) {
-    // console.log(result);
+    //  console.log(result);
     if (err) {
       throw err;
       console.log(err);
     } else {
-      res.send(result);
+      res.send({ status: 1, data: result });
     }
   });
 });
 
-// router.post('/add-franchise', async function (req, res) {
-//   try {
-
-//       let franchise = req.body;
-//       const filePath = './uploads/';
-//       const file = req.files.file;
-//       const file_name = franchise.franchise_code + '_' + file.name;
-//       file.mv(`${filePath}${file_name}`, (err) => {
-//           if (err) {
-//               console.log(err.message);
-//               res.send({ status: 0, message: err.message, code: 200 });
-
-//           }
-
-//       });
-//       await dbFunction.insertQuery("new_franchise", data);
-//       res.send({ status: 1, message: 'File Uploaded Successfully' });
-
-//   }
-//   // console.log(req.files.file, req.body);
-//   catch (error) {
-//       console.log(error.message);
-//       res.send({ status: 0, error: error, message: error });
-//   }
-// });
-
-// router.put("/:id", async function (req, res, next) {
-//   try {
-//     let { id, address } = req.body;
-//     // console.log(id);
-//     const sql = `UPDATE company SET address=? WHERE id=?`;
-//     con.query(sql, [address, id], function (err, result, fields) {
-//       //  console.log(result);
-//       if (result.length == 0) {
-//         res.send({ status: 0, data: err });
-//       } else if (err) {
-//         console.log(err.message);
-//       } else {
-//         res.send({ status: 1 });
-//         // // res.send(result);
-//         // console.log(data);
-//       }
-//     });
-//   } catch (ex) {
-//     res.send({ status: 0, data: ex, error: ex });
-//   }
-// });
-
-// router.delete("/:id", async function (req, res, next) {
-//   try {
-//     let id = req.params.id;
-//     console.log(id);
-//     const sql = `DELETE FROM company WHERE id=` + id;
-//     con.query(sql, function (err, result) {
-//       //  console.log(result);
-//       if (err) {
-//         console.log(err.message);
-//       } else {
-//         res.send({ status: 1, data: result });
-//         //console.log(res);
-//       }
-//     });
-//   } catch (ex) {
-//     console.log(ex.message);
-//     res.send({ status: 0, data: ex, error: ex });
-//   }
-// });
+router.post("/add-recon", async function (req, res, next) {
+  let {
+    hospital,
+    date_emailed,
+    amount,
+    ack,
+    ack_status,
+    analysis,
+    analysis_plan,
+    follow_up,
+    follow_plan,
+    accounting,
+    acc_plan,
+    due_date,
+    remarks,
+  } = req.body;
+  con.query(
+    `INSERT INTO new_recon 
+    (hospital, 
+      date_emailed, 
+      amount, 
+      ack, 
+      ack_status, 
+      initial_ass, 
+      initial_plan, 
+      follow_up,
+      follow_plan, 
+      accounting, 
+      acc_plan, 
+      due_date, 
+      remarks, 
+      date_created) 
+      VALUES (
+        ?, ?, ?, ?, ?, 
+        ?,?,?,?,?,
+        ?,?,?, 
+        NOW())`,
+    [
+      hospital,
+      date_emailed,
+      amount,
+      ack,
+      ack_status,
+      analysis,
+      analysis_plan,
+      follow_up,
+      follow_plan,
+      accounting,
+      acc_plan,
+      due_date,
+      remarks,
+    ],
+    function (err, result) {
+      if (err) {
+        console.log(err);
+        res.send({ status: 0, err: err, message: err });
+      } else {
+        res.send({ status: 1, message: "New Recon!" });
+      }
+    }
+  );
+});
 
 module.exports = router;

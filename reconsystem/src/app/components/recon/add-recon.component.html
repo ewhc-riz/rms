@@ -1,0 +1,389 @@
+<div *ngIf="errorMessage != ''" class="alert alert-danger">
+  <i class="fa-solid fa-circle-xmark"></i>
+  <span class="text-danger fw-bold"> {{ errorMessage }}</span>
+</div>
+
+<div class="card-body mt-5">
+  <form
+    class="row g-3"
+    id="reconForm"
+    [formGroup]="reconForm"
+    (ngSubmit)="saveRecon()"
+  >
+    <div class="row">
+      <div class="col-md-6 mb-4 mt-2">
+        <div class="form-outline">
+          <label
+            for="hospital"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Hospital Name</b></span
+            >
+          </label>
+          <input
+            type="text"
+            id="hospital"
+            name="hospital"
+            class="form-control form-control-md border-secondary"
+            [ngClass]="{ 'is-invalid': reconForm }"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mb-2 mt-2">
+        <div class="form-outline">
+          <label
+            for="date_emailed"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Date Received</b></span
+            >
+          </label>
+          <input
+            type="date"
+            name="date_emailed"
+            id="date_emailed"
+            class="form-control form-control-md border-secondary"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="amount"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"><b>Amount</b></span>
+          </label>
+          <input
+            type="text"
+            name="amount"
+            id="amount"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mb-2 mt-2">
+        <div class="form-outline">
+          <label
+            for="date_emailed"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Suspension Date</b></span
+            >
+          </label>
+          <input
+            type="date"
+            name="suspension"
+            id="suspension"
+            (ngModelChange)="changeDate($event)"
+            class="form-control form-control-md border-secondary"
+            ngModel
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="form-outline">
+          <label
+            for="ack"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Acknowledgement</b></span
+            >
+          </label>
+          <input
+            type="date"
+            id="ack"
+            name="ack"
+            class="form-control form-control-md border-secondary"
+            formControlName="ack_status"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col-md-1 mb-4">
+        <div class="form-outline">
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            (click)="addRowAck()"
+          >
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <form [formGroup]="testForm" class="table-responsive mb-4">     
+            <ng-container formArrayName="ackRows">
+                <table mat-table #tableAck [dataSource]="dataSource">
+                    <ng-container matColumnDef="ack_status">
+                        <mat-header-cell *matHeaderCellDef style="width: 100px !important"> Status / Action Plan
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+                            <select class="form-select form-select-sm" formControlName="ack_status">
+                                <option value="">Please Select</option>
+                                <option value="Email Acknowledgement">Email Acknowledgement</option>
+                                <option value="Returned">Returned</option>
+                                <option value="Undocumented">Undocumented</option>
+                                <option value="Denied">Denied</option>
+                            </select>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ack_desc">
+                        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+                        <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+                            <mat-form-field class="col-md-12">
+                                <input matInput formControlName="ack_desc">
+                            </mat-form-field>
+                        </mat-cell>
+                    </ng-container>
+                </table>
+            </ng-container>
+      </form>
+      <!-- <div class="col-md-3 mb-4">
+        <div class="form-outline">
+          <label
+            for="ack_status"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Status / Action Plan</b></span
+            >
+          </label>
+          <select
+            type="text"
+            name="ack_status"
+            id="ack_status"
+            class="form-select form-select-md border-secondary"
+            formControlName="ack_status"
+            ngModel
+          >
+            <option value="">Please Select</option>
+            <option value="Email Acknowledgement">Email Acknowledgement</option>
+            <option value="Returned">Returned</option>
+            <option value="Undocumented">Undocumented</option>
+            <option value="Denied">Denied</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-5 mb-4">
+        <div class="form-outline">
+          <label
+            for="ack_desc"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Description</b></span
+            >
+          </label>
+          <input
+            type="text"
+            name="ack_desc"
+            id="ack_desc"
+            class="form-control form-control-md border-secondary"
+            formControlName="ack_desc"
+            ngModel
+          />
+        </div>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="analysis"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Recon Analysis</b></span
+            >
+          </label>
+          <input
+            type="date"
+            id="analysis"
+            name="analysis"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="analysis_plan"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Status / Action Plan</b></span
+            >
+          </label>
+          <input
+            type="text"
+            name="analysis_plan"
+            id="analysis_plan"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="follow"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Follow-up Email</b></span
+            >
+          </label>
+          <input
+            type="date"
+            id="follow-up"
+            name="follow"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="follow-plan"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Status / Action Plan</b></span
+            >
+          </label>
+          <input
+            type="text"
+            name="follow-plan"
+            id="follow-plan"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="accounting"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Accounting</b></span
+            >
+          </label>
+          <input
+            type="date"
+            id="accounting"
+            name="accounting"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="acc_plan"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Status / Action Plan</b></span
+            >
+          </label>
+          <input
+            type="text"
+            name="acc_plan"
+            id="acc_plan"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="form-outline">
+          <label
+            for="due_date"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Due Date</b></span
+            ></label
+          >
+          <input
+            type="date"
+            name="due_date"
+            id="due_date"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mb-1 pb-2">
+        <div class="form-outline">
+          <label
+            for="remarks"
+            class="ms-2 position-absolute"
+            style="margin-top: -0.95rem !important"
+          >
+            <span class="h6 small bg-white text-muted px-1"
+              ><b>Remarks</b></span
+            ></label
+          >
+          <input
+            type="remarks"
+            name="remarks"
+            id="remarks"
+            class="form-control form-control-md border-secondary"
+            ngModel
+          />
+        </div>
+      </div>
+    </div>
+    <div class="mt-1 pt-1">
+      <button class="btn btn-dark" type="submit" id="saveRecon">
+        <i class="fa fa-check-square-o"></i> Save
+      </button>
+    </div>
+ 
+</div>

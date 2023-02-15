@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angul
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -21,6 +22,9 @@ export class MainComponent implements OnInit {
 
   selectedFromDate: any;
   selectedToDate: any;
+
+  userInfo: any;
+  isLogin: boolean = false;
   
 
   searchForm: UntypedFormGroup = new UntypedFormGroup({
@@ -57,11 +61,12 @@ export class MainComponent implements OnInit {
   /*End Pagination*/
 
 
-  constructor(private _api: ApiService, private formBuilder: UntypedFormBuilder) {
+  constructor(private _api: ApiService, private formBuilder: UntypedFormBuilder, private _auth: AuthService) {
   }
 
 
    ngOnInit(): void {
+    this.userInfo = this._auth.getUserInfo();
     this.searchForm = this.formBuilder.group({
       companyName: '',
       dtCriteria: '',

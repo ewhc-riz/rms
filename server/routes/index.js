@@ -6,6 +6,6 @@ const addRecon = require('./recon');
 
 
 router.use('/user', user);
-router.use('/add-recon', addRecon);
+router.use('/recon', addRecon);
 
 module.exports = router;

@@ -6,16 +6,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html'
+  templateUrl: './users.component.html',
 })
 export class UsersComponent implements OnInit {
-
   countPerPage: number = 10;
   pageCurrent: number = 1;
   userList: any = [];
-  errorMessage: string = "";
-  user_password: string = "";
-  confirm_password: string = ""
+  errorMessage: string = '';
+  user_password: string = '';
+  confirm_password: string = '';
   userId: number;
 
   /*Pagination */
@@ -23,7 +22,7 @@ export class UsersComponent implements OnInit {
     id: 'custom',
     itemsPerPage: 10,
     currentPage: 1,
-    totalItems: 0
+    totalItems: 0,
   };
 
   public maxSize: number = 3;
@@ -35,22 +34,19 @@ export class UsersComponent implements OnInit {
     nextLabel: '>',
     screenReaderPaginationLabel: 'Pagination',
     screenReaderPageLabel: 'page',
-    screenReaderCurrentLabel: `You're on page`
+    screenReaderCurrentLabel: `You're on page`,
   };
 
   /*End Pagination*/
 
-
-  constructor(private _api: ApiService, private _route: ActivatedRoute, private _router: Router) { }
-
-
+  constructor(
+    private _api: ApiService,
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {
-
-
-
     this.loadAllUsers();
-
   }
 
   loadAllUsers() {
@@ -59,57 +55,54 @@ export class UsersComponent implements OnInit {
       this.userList = res.data;
       this.config.totalItems = this.userList.length;
     });
-
   }
 
   checkPasswords(password1: string, password2: string) {
     if (!this.isPasswordSame(password1, password2)) {
-      this.errorMessage = "Passwords doesn't match!"
+      this.errorMessage = "Passwords doesn't match!";
+    } else {
+      this.errorMessage = '';
     }
-    else {
-      this.errorMessage = ""
-    }
-
   }
 
   isPasswordSame(password1: string, password2: string) {
     if (password1 != password2) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
 
   saveUser(registrationForm: NgForm) {
-    if (!this.isPasswordSame(registrationForm.value.user_password, registrationForm.value.confirm_password)) {
-      this.errorMessage = "Passwords doesn't match!"
-    }
-    else {
-      this.errorMessage = ""
+    if (
+      !this.isPasswordSame(
+        registrationForm.value.user_password,
+        registrationForm.value.confirm_password
+      )
+    ) {
+      this.errorMessage = "Passwords doesn't match!";
+    } else {
+      this.errorMessage = '';
     }
 
-    this._api.postTypeRequest('user/add-user', registrationForm.value).subscribe((res: any) => {
-      console.log(res.status);
-      if (res.status == 1) {
-        this.errorMessage = "";
-        window.location.href = 'users';
-      }
-      else {
-        this.errorMessage = res.message;
-      }
-    })
+    this._api
+      .postTypeRequest('user/add-user', registrationForm.value)
+      .subscribe((res: any) => {
+        console.log(res.status);
+        if (res.status == 1) {
+          this.errorMessage = '';
+          window.location.href = 'users';
+        } else {
+          this.errorMessage = res.message.length;
+        }
+      });
   }
 
   deleteUser(id: number) {
-    if (confirm("Are you sure you want delete this user?")) {
-      this._api.deleteTypeRequest("user/" + id).subscribe((res: any) => {
+    if (confirm('Are you sure you want delete this user?')) {
+      this._api.deleteTypeRequest('user/' + id).subscribe((res: any) => {
         this.loadAllUsers();
       });
-
     }
   }
-
-
-
 }

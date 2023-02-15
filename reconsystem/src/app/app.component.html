@@ -202,7 +202,10 @@
         <hr />
       </li>
       <li routerLinkActive="active" *ngIf="this.isLogin">
-        <a [routerLink]="['/add-franchise']"><i class="fa fa-plus"></i> Add Recon</a>
+        <a [routerLink]="['/recon']"><i class="fa fa-plus"></i> Add Recon</a>
+      </li>
+      <li routerLinkActive="active" *ngIf="this.isLogin">
+        <a [routerLink]="['/reports']"><i class="fa  fa-files-o"></i> Reports</a>
       </li>
 
 
