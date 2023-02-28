@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './main.component.html',
 })
 export class MainComponent implements OnInit {
-  franchiseList: any = [];
+  hospitalList: any = [];
   allList: any = [];
   filteredList: any = [];
   objList = new Observable<any>();
@@ -28,8 +28,7 @@ export class MainComponent implements OnInit {
   
 
   searchForm: UntypedFormGroup = new UntypedFormGroup({
-    companyName: new UntypedFormControl(),
-    dtCriteria: new UntypedFormControl(),
+    hospitalName: new UntypedFormControl(),
     fromDate: new UntypedFormControl(),
     toDate: new UntypedFormControl()
   });
@@ -68,46 +67,46 @@ export class MainComponent implements OnInit {
    ngOnInit(): void {
     this.userInfo = this._auth.getUserInfo();
     this.searchForm = this.formBuilder.group({
-      companyName: '',
-      dtCriteria: '',
+      hospitalName: '',
       fromDate: '',
       toDate: ''
   });
-console.log('any');
+      console.log('any');
 
-    this._api.getTypeRequest('franchise/').subscribe((res: any) => {
+    this._api.getTypeRequest('recon/').subscribe((res: any) => {
       //console.log(res[0]);
-      this.franchiseList = res[0];
-      this.totalRecords = this.franchiseList.length;
+      this.hospitalList = res[0];
+      this.totalRecords = this.hospitalList.length;
       let index = 0;
 
-      for (let f of this.franchiseList) {
+      for (let f of this.hospitalList) {
         index++;
         f.rownum = index;
       }
 
-      this.filteredList = this.franchiseList;
-      this.config.totalItems = this.franchiseList.length;
+      this.filteredList = this.hospitalList;
+      this.config.totalItems = this.hospitalList.length;
     });
   }
 
   filterList() {
 
-    if (this.searchForm.value.dtCriteria == 'datereq') {
+    
       
       this.selectedFromDate = moment(this.searchForm.value.fromDate).format('YYYY-MM-DD');
       this.selectedToDate = moment(this.searchForm.value.toDate).format('YYYY-MM-DD');
-       
+      
       console.log(this.selectedFromDate);
       console.log(this.selectedToDate);
       
-      this.filteredList = [...this.franchiseList.filter((f: any) =>
+      this.filteredList = [...this.hospitalList.filter((f: any) =>
         (
-          f.companyName.toLowerCase().includes(this.searchStr.toLowerCase())
+          f.hospitalName.toLowerCase().includes(this.searchStr.toLowerCase())
           &&
           (
-            f.dateRequest >= this.selectedFromDate && f.dateRequest <= this.selectedToDate
+           f.date_emailed >= this.selectedFromDate && f.date_emailed <= this.selectedToDate
           )
+          
         )
  
         )
@@ -119,7 +118,7 @@ console.log('any');
       }
       this.config.totalItems = this.filteredList.length;
 
-    }
+    
 
 
   }

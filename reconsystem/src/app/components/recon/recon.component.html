@@ -15,23 +15,30 @@
   </div>
   <div class="table-responsive" style="padding-top: 10px">
     <table class="table table-hover" style="font-size: small">
-      <thead class="table-dark">
+      <thead class="table-bordered">
         <tr>
-          <th></th>
-          <th>Hospital</th>
+          <th class="stickycol">Hospital</th>
           <th>Date Emailed</th>
           <th>Amount</th>
-          <th>Acknowledgement</th>
-          <th>Status</th>
-          <th>Team Aiko</th>
-          <th>Action Plan</th>
-          <th>Follow-up Email</th>
-          <th>Action Plan</th>
-          <th>Accounting</th>
-          <th>Action Plan</th>
+          <th>Suspension</th>
           <th>Due Date</th>
-          <th>Remarks</th>
-          <th class="stickycol align-middle text-center bg-dark">View</th>
+          <th>Acknowledgement</th>
+          <th>Acknowledgement Status</th>
+          <th>Acknowledgement Description</th>
+          <th>Analysis</th>
+          <th>Analysis Status</th>
+          <th>Analysis Description</th>
+          <th>Follow-up Email</th>
+          <th>Follow-up Status</th>
+          <th>Follow-up Description</th>
+          <th>Accounting</th>
+          <th>Accounting Status</th>
+          <th>Accounting Description</th>
+          <th>Admin</th>
+          <th>Admin Status</th>
+          <th>Admin Description</th>
+          <th>Closure</th>
+          <th class="stickycol align-middle text-center">View</th>
         </tr>
       </thead>
       <tbody>
@@ -39,29 +46,27 @@
           *ngFor="let recon of reconList | paginate : config"
           (dblclick)="deleteRecon(recon.id)"
         >
-          <td>
-            <a
-              style="cursor: pointer"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Delete"
-              (click)="deleteRecon(recon.id)"
-              ><i class="fa-solid fa-trash"></i
-            ></a>
-          </td>
-          <td>{{ recon.hospital }}</td>
+          <td class="stickycol">{{ recon.hospital }}</td>
           <td>{{ recon.date_emailed | date }}</td>
           <td>{{ recon.amount }}</td>
-          <td>{{ recon.ack}}</td>
-          <td>{{ recon.ack_status}}</td>
-          <td>{{ recon.initial_ass}}</td>
-          <td>{{ recon.initial_plan}}</td>
-          <td>{{ recon.follow_up}}</td>
-          <td>{{ recon.follow_plan}}</td>
-          <td>{{ recon.accounting}}</td>
-          <td>{{ recon.acc_plan}}</td>
-          <td>{{ recon.due_date}}</td>
-          <td>{{ recon.remarks }}</td>
+          <td>{{ recon.suspension | date }}</td>
+          <td style="color:red">{{ recon.due_date | date}}</td>
+          <td>{{ recon.ack | date}}</td>
+          <td>{{ recon.ack_status }}</td>
+          <td>{{ recon.ack_desc }}</td>
+          <td>{{ recon.analysis | date}}</td>
+          <td>{{ recon.analysis_status}}</td>
+          <td>{{ recon.analysis_desc}}</td>
+          <td>{{ recon.follow_up | date}}</td>
+          <td>{{ recon.follow_status}}</td>
+          <td>{{ recon.follow_desc}}</td>
+          <td>{{ recon.accounting | date}}</td>
+          <td>{{ recon.acc_status}}</td>
+          <td>{{ recon.acc_desc}}</td>
+          <td>{{ recon.admin | date}}</td>
+          <td>{{ recon.admin_status}}</td>
+          <td>{{ recon.admin_desc}}</td>
+          <td>{{ recon.closure | date}}</td>
           <td class="stickycol align-middle text-center">
             <a [routerLink]="['/recon/', recon.id]">
               <i class="fa-sharp fa-solid fa-eye"></i> View</a

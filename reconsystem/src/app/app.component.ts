@@ -29,12 +29,15 @@ export class AppComponent {
     
     if (this._auth.getToken() == null) {
       this.isLogin = false;
+      this.userInfo = {
+        user_level: 'GUEST',
+      }
       this._router.navigate(['login']);
 
     }
     else {
       this.isLogin = true;
-
+      this.userInfo = this._auth.getUserInfo();
     }
   }
 

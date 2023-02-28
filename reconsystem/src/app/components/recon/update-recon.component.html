@@ -1,75 +1,254 @@
-<div class="card-body mt-5">
+<h2 align="center">Update Recon Information</h2>
+<mat-stepper [linear]="isLinear" #stepper labelPosition="bottom">
+  <mat-step [stepControl]="formHospital" label="Company" #step1>
     <form
-      class="row g-3"
-      id="reconForm"
-      [formGroup]="reconForm"
-      (ngSubmit)="updateRecon()"
-      novalidate
+      [formGroup]="formHospital"
+      enctype="multipart/form-data"
+      class="col-md-12"
     >
-      <input type="hidden" formControlName="id" name="id" id="id" />
-      <div class="row">
-        <div class="col-md-6 mb-4">
-          <label
-            for="firstname"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1">Hospital</span>
-          </label>
+    <div class="row">
+      <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Hospital Name</b></mat-label>
           <input
-            [ngClass]="{ 'is-invalid': reconForm.controls['firstname'].errors }"
+            [ngClass]="{ 'is-invalid': formHospital.controls['hospital'].errors }"
+            formControlName="hospital"
+            matInput
             type="text"
-            id="firstname"
-            name="firstname"
-            formControlName="firstname"
-            class="form-control form-control-md border-secondary"
-            
+            class="form-control"
+            readonly
           />
-        </div>
-        <div class="col-md-6 mb-4">
-          <label
-            for="lastname"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1">Date</span>
-          </label>
-          <input
-            [ngClass]="{ 'is-invalid': reconForm.controls['lastname'].errors }"
-            type="text"
-            name="lastname"
-            id="lastname"
-            formControlName="lastname"
-            class="form-control form-control-md border-secondary"
-           
-          />
-        </div>
-      </div>
-  
+        </mat-form-field>
+        <mat-form-field
+        color="accent"
+        appearance="outline"
+        floatLabel="always"
+        class="col-md-4 pt-3"
+      >
+        <!-- [matDatepickerFilter]="myFilter" -->
+        <mat-label><b>Date Received</b></mat-label>
+        <input
+          [ngClass]="{ 'is-invalid': formHospital.controls['date_emailed'].errors }"
+          matInput
+          [matDatepicker]="emailedpicker"
+          placeholder="Choose Date"
+          formControlName="date_emailed"
+          name="date_emailed"          
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="emailedpicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #emailedpicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
       <div class="row">
-        <div class="col-md-12 mb-4 pb-2">
-          <label
-            for="email"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1">Amount</span>
-          </label>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Amount</b></mat-label>
           <input
-            [ngClass]="{ 'is-invalid': reconForm.controls['email'].errors }"
-            type="email"
-            name="email"
-            id="email"
-            formControlName="email"
-            class="form-control form-control-md border-secondary"
+            [ngClass]="{ 'is-invalid': formHospital.controls['amount'].errors }"
+            matInput
+            type="text"
+            class="form-control"
+            formControlName="amount"
           />
-        </div>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-4 pt-3"
+        >
+          <mat-label><b>Suspension Date</b></mat-label>
+          <input
+            [ngClass]="{ 'is-invalid': formHospital.controls['suspension'].errors }"
+            matInput
+            [matDatepicker]="suspensionpicker"
+            placeholder="Choose Date"
+            formControlName="suspension"
+            name="suspension"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="suspensionpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #suspensionpicker></mat-datepicker>
+        </mat-form-field>
       </div>
-      <div class="mt-1">
-        <button class="btn btn-dark" type="submit" id="updateRecon">
-          <i class="fa fa-thin fa-square-pen"></i> Update
-        </button>
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-4 pt-3"
+        >
+          <mat-label><b>Due Date</b></mat-label>
+          <input
+            [ngClass]="{ 'is-invalid': formHospital.controls['due_date'].errors }"
+            matInput
+            [matDatepicker]="duepicker"
+            placeholder="Choose Date"
+            formControlName="due_date"
+            name="due_date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="duepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #duepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
       </div>
     </form>
-  </div>
-  
+    <button type="submit" matStepperNext mat-raised-button>Next</button> 
+  </mat-step>
+  <mat-step [stepControl]="formAck" label="Acknowledgement" #step2>
+    <form [formGroup]="formAck" class="col-md-12">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Acknowledgement Date</b></mat-label>
+          <input
+            [ngClass]="{ 'is-invalid': formAck.controls['ack'].errors }"
+            matInput
+            [matDatepicker]="accpicker"
+            placeholder="Choose Date"
+            formControlName="ack"
+            name="ack"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="accpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #accpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Acknowledgement</b></mat-label>
+          <mat-select formControlName="ack_status"
+          [ngClass]="{ 'is-invalid': formAck.controls['ack_status'].errors }"
+          >
+            <mat-option value="Email Acknowledgement"> Email Acknowledgement </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Description</b></mat-label>
+          <input
+           [ngClass]="{ 'is-invalid': formAck.controls['ack_desc'].errors }"
+            matInput
+            formControlName="ack_desc"
+            name="ack_desc"
+          />
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button> 
+  </mat-step>
+  <mat-step [stepControl]="formAnalysis" label="Analysis" #step3> 
+    <form [formGroup]="formAnalysis" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Analysis Date</b></mat-label>
+          <input
+            [ngClass]="{ 'is-invalid': formAnalysis.controls['analysis'] }"
+            matInput
+            [matDatepicker]="analysispicker"
+            placeholder="Choose Date"
+            formControlName="analysis"
+            name="analysis"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="analysispicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #analysispicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button (click)="addAnalysis()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add Analysis
+      </button>
+      <ng-container formArrayName="analysisRows">
+        <table mat-table #tableAnalysis [dataSource]="analysisDataSource">
+          
+          <ng-container matColumnDef="analysis_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="analysis_status"
+                [ngClass]="{ 'is-invalid': formAnalysis.controls['analysis_status'] }"
+              >
+                <option value="">Please Select</option>
+                <option value="Team 30 Days">
+                  Team 30 Days
+                </option>
+                <option value="Team 15 Days">
+                  Team 15 Days
+                </option>
+                <option value="Endorsed to I.T">Endorsed to I.T</option>
+                <option value="Request to Accounting">
+                  Request to Accounting
+                </option>
+                <option value="Request for Attachments">
+                  Request for Attachments
+                </option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="analysis_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="analysis_desc"
+                [ngClass]="{ 'is-invalid': formAnalysis.controls['analysis_desc'] }" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="analysisColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: analysisColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+
+  <mat-step label="Follow-Up" #step4> </mat-step>
+  <mat-step label="Accounting" #step5> </mat-step>
+  <mat-step label="Admin" #step6> </mat-step>
+  <mat-step label="Closure" #step7> </mat-step>
+</mat-stepper>

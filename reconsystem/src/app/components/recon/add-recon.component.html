@@ -1,389 +1,501 @@
-<div *ngIf="errorMessage != ''" class="alert alert-danger">
-  <i class="fa-solid fa-circle-xmark"></i>
-  <span class="text-danger fw-bold"> {{ errorMessage }}</span>
-</div>
+<button
+  mat-dialog-close
+  mat-icon-button
+  class="btn"
+  style="float: right; top: -2px; right: -2px; min-width: none"
+>
+  <mat-icon>close</mat-icon>
+</button>
 
-<div class="card-body mt-5">
-  <form
-    class="row g-3"
-    id="reconForm"
-    [formGroup]="reconForm"
-    (ngSubmit)="saveRecon()"
-  >
-    <div class="row">
-      <div class="col-md-6 mb-4 mt-2">
-        <div class="form-outline">
-          <label
-            for="hospital"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Hospital Name</b></span
-            >
-          </label>
-          <input
-            type="text"
-            id="hospital"
-            name="hospital"
-            class="form-control form-control-md border-secondary"
-            [ngClass]="{ 'is-invalid': reconForm }"
-            ngModel
-            required
-          />
-        </div>
-      </div>
-      <div class="col-md-6 mb-2 mt-2">
-        <div class="form-outline">
-          <label
-            for="date_emailed"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Date Received</b></span
-            >
-          </label>
-          <input
-            type="date"
-            name="date_emailed"
-            id="date_emailed"
-            class="form-control form-control-md border-secondary"
-            ngModel
-            required
-          />
-        </div>
-      </div>
-    </div>
+<h2 align="center">Add New Recon</h2>
+<hr />
 
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="amount"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"><b>Amount</b></span>
-          </label>
+<mat-stepper [linear]="isLinear" #stepper labelPosition="bottom">
+  <mat-step [stepControl]="formHospital" label="Hospital" #step1>
+    <form
+      [formGroup]="formHospital"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div class="row">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <!-- [matAutocomplete]="auto" -->
+          <mat-label><b>Hospital Name</b></mat-label>
           <input
+            formControlName="hospital"
+            matInput
             type="text"
-            name="amount"
-            id="amount"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-      <div class="col-md-6 mb-2 mt-2">
-        <div class="form-outline">
-          <label
-            for="date_emailed"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Suspension Date</b></span
-            >
-          </label>
-          <input
-            type="date"
-            name="suspension"
-            id="suspension"
-            (ngModelChange)="changeDate($event)"
-            class="form-control form-control-md border-secondary"
-            ngModel
+            class="form-control"
+            [matAutocomplete]="auto"
+            name="myControl"
             required
           />
-        </div>
-      </div>
-    </div>
-  </form>
-    <div class="row">
-      <div class="col-md-3 mb-4">
-        <div class="form-outline">
-          <label
-            for="ack"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Acknowledgement</b></span
-            >
-          </label>
-          <input
-            type="date"
-            id="ack"
-            name="ack"
-            class="form-control form-control-md border-secondary"
-            formControlName="ack_status"
-            ngModel
-          />
-        </div>
-      </div>
-      <div class="col-md-1 mb-4">
-        <div class="form-outline">
-          <button
-            type="button"
-            class="btn btn-sm btn-primary"
-            (click)="addRowAck()"
-          >
-            <i class="fa fa-plus"></i>
+          <button *ngIf="this.formHospital.controls['hospital'].value" matSuffix mat-icon-button
+          aria-label="Clear" (click)="this.formHospital.controls['hospital'].setValue('')">
+          <mat-icon>close</mat-icon>
           </button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <form [formGroup]="testForm" class="table-responsive mb-4">     
-            <ng-container formArrayName="ackRows">
-                <table mat-table #tableAck [dataSource]="dataSource">
-                    <ng-container matColumnDef="ack_status">
-                        <mat-header-cell *matHeaderCellDef style="width: 100px !important"> Status / Action Plan
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
-                            <select class="form-select form-select-sm" formControlName="ack_status">
-                                <option value="">Please Select</option>
-                                <option value="Email Acknowledgement">Email Acknowledgement</option>
-                                <option value="Returned">Returned</option>
-                                <option value="Undocumented">Undocumented</option>
-                                <option value="Denied">Denied</option>
-                            </select>
-                        </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="ack_desc">
-                        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-                        <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
-                            <mat-form-field class="col-md-12">
-                                <input matInput formControlName="ack_desc">
-                            </mat-form-field>
-                        </mat-cell>
-                    </ng-container>
-                </table>
-            </ng-container>
-      </form>
-      <!-- <div class="col-md-3 mb-4">
-        <div class="form-outline">
-          <label
-            for="ack_status"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Status / Action Plan</b></span
-            >
-          </label>
-          <select
-            type="text"
-            name="ack_status"
-            id="ack_status"
-            class="form-select form-select-md border-secondary"
-            formControlName="ack_status"
-            ngModel
-          >
-            <option value="">Please Select</option>
-            <option value="Email Acknowledgement">Email Acknowledgement</option>
-            <option value="Returned">Returned</option>
-            <option value="Undocumented">Undocumented</option>
-            <option value="Denied">Denied</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-md-5 mb-4">
-        <div class="form-outline">
-          <label
-            for="ack_desc"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Description</b></span
-            >
-          </label>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayHospitalName">
+            <mat-option *ngFor="let fh of filteredHospitalList | async" [value]="fh">
+              {{fh.hospital_name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-4 pt-3"
+        >
+          <!-- [matDatepickerFilter]="myFilter" -->
+          <mat-label><b>Date Received</b></mat-label>
           <input
-            type="text"
-            name="ack_desc"
-            id="ack_desc"
-            class="form-control form-control-md border-secondary"
+            matInput
+            [matDatepicker]="emailedpicker"
+            placeholder="Choose Date"
+            formControlName="date_emailed"
+            name="date_emailed"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="emailedpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #emailedpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <div class="row">
+          <mat-form-field
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-6 pt-3"
+          >
+            <mat-label><b>Amount</b></mat-label>
+            <input
+              matInput
+              type="text"
+              class="form-control"
+              formControlName="amount"
+            />
+          </mat-form-field>
+          <mat-form-field
+            color="accent"
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-4 pt-3"
+          >
+            <mat-label><b>Suspension Date</b></mat-label>
+            <input
+              matInput
+              [matDatepicker]="suspensionpicker"
+              placeholder="Choose Date"
+              formControlName="suspension"
+              name="suspension"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="suspensionpicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #suspensionpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field
+            color="accent"
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-4 pt-3"
+          >
+            <mat-label><b>Due Date</b></mat-label>
+            <input
+              matInput
+              [matDatepicker]="duepicker"
+              placeholder="Choose Date"
+              formControlName="due_date"
+              name="due_date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="duepicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #duepicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <button type="submit" matStepperNext mat-raised-button>Next</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="formAck" label="Acknowledgement" #step2>
+    <form [formGroup]="formAck" class="col-md-12">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Acknowledgement Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="accpicker"
+            placeholder="Choose Date"
+            formControlName="ack"
+            name="ack"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="accpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #accpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Acknowledgement</b></mat-label>
+          <mat-select formControlName="ack_status">
+            <mat-option value="Email Acknowledgement"> Email Acknowledgement </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Description</b></mat-label>
+          <input
+            matInput
             formControlName="ack_desc"
-            ngModel
+            name="ack_desc"
           />
-        </div>
-      </div> -->
-    </div>
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="analysis"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Recon Analysis</b></span
-            >
-          </label>
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+
+  <mat-step [stepControl]="formAnalysis" label="Recon Analysis" #step3>
+    <form [formGroup]="formAnalysis" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Analysis Date</b></mat-label>
           <input
-            type="date"
-            id="analysis"
+            matInput
+            [matDatepicker]="analysispicker"
+            placeholder="Choose Date"
+            formControlName="analysis"
             name="analysis"
-            class="form-control form-control-md border-secondary"
-            ngModel
           />
-        </div>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="analysispicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #analysispicker></mat-datepicker>
+        </mat-form-field>
       </div>
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="analysis_plan"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Status / Action Plan</b></span
-            >
-          </label>
-          <input
-            type="text"
-            name="analysis_plan"
-            id="analysis_plan"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="follow"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Follow-up Email</b></span
-            >
-          </label>
-          <input
-            type="date"
-            id="follow-up"
-            name="follow"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="follow-plan"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Status / Action Plan</b></span
-            >
-          </label>
-          <input
-            type="text"
-            name="follow-plan"
-            id="follow-plan"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="accounting"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Accounting</b></span
-            >
-          </label>
-          <input
-            type="date"
-            id="accounting"
-            name="accounting"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="acc_plan"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Status / Action Plan</b></span
-            >
-          </label>
-          <input
-            type="text"
-            name="acc_plan"
-            id="acc_plan"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 mb-4">
-        <div class="form-outline">
-          <label
-            for="due_date"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Due Date</b></span
-            ></label
-          >
-          <input
-            type="date"
-            name="due_date"
-            id="due_date"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 mb-1 pb-2">
-        <div class="form-outline">
-          <label
-            for="remarks"
-            class="ms-2 position-absolute"
-            style="margin-top: -0.95rem !important"
-          >
-            <span class="h6 small bg-white text-muted px-1"
-              ><b>Remarks</b></span
-            ></label
-          >
-          <input
-            type="remarks"
-            name="remarks"
-            id="remarks"
-            class="form-control form-control-md border-secondary"
-            ngModel
-          />
-        </div>
-      </div>
-    </div>
-    <div class="mt-1 pt-1">
-      <button class="btn btn-dark" type="submit" id="saveRecon">
-        <i class="fa fa-check-square-o"></i> Save
+      <button mat-raised-button (click)="addAnalysis()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add Analysis
       </button>
-    </div>
- 
-</div>
+      <ng-container formArrayName="analysisRows">
+        <table mat-table #tableAnalysis [dataSource]="analysisDataSource">
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef [hidden]="true"> ID </mat-header-cell>
+              <mat-cell *matCellDef="let row; let i = index" [formGroup]="row" [hidden]="true">
+                  <mat-form-field class="col-md-3">
+                      <input matInput formControlName="id" class="text-center" readonly>
+                  </mat-form-field>
+              </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="analysis_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="analysis_status"
+              >
+                <option value="">Please Select</option>
+                <option value="Team 30 Days">
+                  Team 30 Days
+                </option>
+                <option value="Team 15 Days">
+                  Team 15 Days
+                </option>
+                <option value="Endorsed to I.T">Endorsed to I.T</option>
+                <option value="Request to Accounting">
+                  Request to Accounting
+                </option>
+                <option value="Request for Attachments">
+                  Request for Attachments
+                </option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="analysis_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="analysis_desc" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="analysisColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: analysisColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+  <mat-step [stepControl]="formFollowUp" label="Follow Up" #step4>
+    <form [formGroup]="formFollowUp" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Follow-up Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="followpicker"
+            placeholder="Choose Date"
+            formControlName="follow_up"
+            name="follow_up"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="followpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #followpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Follow Up</b></mat-label>
+          <mat-select formControlName="follow_status">
+            <mat-option value="On Going Recon"> On Going Recon</mat-option>
+            <mat-option value="Request for Extension"> Request for Extension</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Description</b></mat-label>
+          <input
+            matInput
+            formControlName="follow_desc"
+            name="follow_desc"
+          />
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+  <mat-step [stepControl]="formAccounting" label="Accounting" #step5>
+    <form [formGroup]="formAccounting" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Accounting Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="accountingpicker"
+            placeholder="Choose Date"
+            formControlName="accounting"
+            name="accounting"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="accountingpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #accountingpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button (click)="addAccounting()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add New
+      </button>
+
+      <ng-container formArrayName="accountingRows">
+        <table mat-table #tableAccounting [dataSource]="accountingDatasource">
+          <ng-container matColumnDef="acc_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="acc_status"
+              >
+                <option value="">Please Select</option>
+                <option value="Check Releasing">
+                  Check Releasing
+                </option>
+                <option value="For Signing">
+                  For Signing
+                </option>
+                <option value="Proof of Payment">Proof of Payment</option>
+                <option value="Clearing Cheque Date">
+                  Clearing Cheque Date
+                </option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="acc_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="acc_desc" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="accColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: accColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+  <mat-step [stepControl]="formAdmin" label="Admin" #step6>
+    <form [formGroup]="formAdmin" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Admin Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="adminpicker"
+            placeholder="Choose Date"
+            formControlName="admin"
+            name="admin"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="adminpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #adminpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button (click)="addAdmin()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add 
+      </button>
+
+      <ng-container formArrayName="adminRows">
+        <table mat-table #tableAdmin [dataSource]="adminDatasource">
+          <ng-container matColumnDef="admin_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="admin_status"
+              >
+                <option value="">Please Select</option>
+                <option value="Courier Messenger">
+                  Courier Messenger
+                </option>
+                <option value="Collector">
+                  Collector
+                </option>
+                <option value="Outsource">Outsource</option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="admin_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="admin_desc" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="adminColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: adminColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+  <mat-step [stepControl]="formClosure" label="Closure" #step7>
+    <form
+      [formGroup]="formClosure"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-4 pt-3"
+        >
+          <mat-label><b>Closure Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="closurepicker"
+            placeholder="Choose Date"
+            formControlName="closure"
+            name="closure"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="closurepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #closurepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+      <i class="fa-solid fa-check"></i> Submit
+    </button>
+  </mat-step>
+</mat-stepper>

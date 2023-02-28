@@ -5,6 +5,7 @@
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
     max-width: 100;
+    height: 100%;
   }
 
   p {
@@ -58,18 +59,16 @@
     display: flex;
     align-items: stretch;
     max-height: 100%;
-
-
   }
 
   #sidebar {
     min-width: 250px;
     width: 20%;
     background: #6d5192;
-
     color: #f3f3f3;
     transition: all 0.3s;
     border-right: #222222 1px;
+    max-height: 100%;
 
   }
 
@@ -204,9 +203,9 @@
       <li routerLinkActive="active" *ngIf="this.isLogin">
         <a [routerLink]="['/recon']"><i class="fa fa-plus"></i> Add Recon</a>
       </li>
-      <li routerLinkActive="active" *ngIf="this.isLogin">
-        <a [routerLink]="['/reports']"><i class="fa  fa-files-o"></i> Reports</a>
-      </li>
+      <!-- <li routerLinkActive="active" *ngIf="this.isLogin">
+        <a [routerLink]="['/reports']"><i class="fa fa-files-o"></i> Reports</a>
+      </li> -->
 
 
 

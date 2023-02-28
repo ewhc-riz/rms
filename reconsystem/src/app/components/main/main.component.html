@@ -1,14 +1,14 @@
-<h3>Hello! {{ userInfo.firstname + ' ' + userInfo.lastname }}</h3>
+<!-- <h3>Hello! {{ userInfo.firstname + ' ' + userInfo.lastname }}</h3> -->
 
 
-<!-- <form [formGroup]="searchForm">
-    <mat-form-field appearance="outline" floatLabel="always" class="m-2">
-        <mat-label>Search Company Name</mat-label>
-        <input matInput [(ngModel)]="searchStr" formControlName="companyName" name="companyName" type="text"
-            id="searchStr" placeholder="Search Account Name">
+<form [formGroup]="searchForm">
+    <mat-form-field appearance="outline" floatLabel="always" class="col-md-4 m-2">
+        <mat-label>Search Hospital Name</mat-label>
+        <input matInput [(ngModel)]="searchStr" formControlName="hospitalName" name="hospitalName" type="text"
+            id="searchStr" placeholder="Search Hospital Name">
     </mat-form-field>
 
-    <mat-form-field appearance="outline" floatLabel="always" class="m-2">
+    <!-- <mat-form-field appearance="outline" floatLabel="always" class="m-2">
         <mat-label>Date Range</mat-label>
         <select id="searchDate" matNativeControl placeholder="Select Criteria" formControlName="dtCriteria"
             name="dtCriteria">
@@ -16,7 +16,7 @@
             <option value="datereq">Request Date</option>
             <option value="dateapp">Approve Date</option>
         </select>
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field color="accent" appearance="outline" floatLabel="always" class="m-2">
         <mat-label>From Date</mat-label>
         <input matInput [matDatepicker]="picker1" placeholder="Start Date" formControlName="fromDate" name="fromDate">
@@ -34,47 +34,60 @@
     <button type="button" data-bs-toggle="tooltip" data-bs-title="Search" class="btn btn-dark m-2"><i
             class="fa-solid fa-magnifying-glass" (click)="filterList()"></i></button>
 
-    <button type="button" data-bs-toggle="tooltip" data-bs-title="Download Excel" class="btn btn-dark"><i
-            class="fa-solid fa-file-excel"></i></button>
+    <!-- <button type="button" data-bs-toggle="tooltip" data-bs-title="Download Excel" class="btn btn-dark"><i
+            class="fa-solid fa-file-excel"></i></button> -->
 </form>
 <div class="table-responsive">
-    <table class="table table-sm" style="font-size: smaller;">
+    <table class="table table-sm" style="font-size: small;">
         <thead class="table-bordered align-middle">
             <tr>
-                <th class="align-middle">#</th>
-                <th class="stickycol align-middle" style="width: 50%;">Company</th>
-                <th class="align-middle">Date Request</th>
-                <th class="align-middle">Franchise Code</th>
-                <th class="align-middle">Column 5</th>
-                <th class="align-middle">Column 6</th>
-                <th class="align-middle">Column 7</th>
-                <th class="align-middle">Column 8</th>
-                <th class="align-middle">Column 9</th>
-                <th class="align-middle">Column 10</th>
-                <th class="align-middle">Column 11</th>
-                <th class="align-middle">Column 12</th>
-                <th class="align-middle">Column 13</th>
-                <th class="stickycol align-middle text-center">ID</th>
- 
+                <th class="stickycol align-middle" style="width: 50%;">Hospital</th>
+                <th>Date Emailed</th>
+                <th>Amount</th>
+                <th>Suspension</th>
+                <th>Due Date</th>
+                <th>Acknowledgement</th>
+                <th>Acknowledgement Status</th>
+                <th>Acknowledgement Description</th>
+                <th>Analysis</th>
+                <th>Analysis Status</th>
+                <th>Analysis Description</th>
+                <th>Follow-up Email</th>
+                <th>Follow-up Status</th>
+                <th>Follow-up Description</th>
+                <th>Accounting</th>
+                <th>Accounting Status</th>
+                <th>Accounting Description</th>
+                <th>Admin</th>
+                <th>Admin Status</th>
+                <th>Admin Description</th>
+                <th>Closure</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let f of filteredList  | paginate : config; ">
-                <td>{{f.rownum}}</td>
-                <td class="stickycol">{{f.companyName}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.franchiseCode}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                 <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td>{{f.dateRequest | date: 'yyyy-MM-dd'}}</td>
-                <td class="stickycol align-middle" style="text-align: right; ">{{f.id}}</td>
- 
+                <td class="stickycol">{{f.hospital}}</td>
+                <td>{{f.date_emailed | date}}</td>
+                <td>{{ f.amount }}</td>
+                <td>{{ f.suspension | date }}</td>
+                <td style="color:red">{{ f.due_date | date}}</td>
+                <td>{{ f.ack | date}}</td>
+                <td>{{ f.ack_status }}</td>
+                <td>{{ f.ack_desc }}</td>
+                <td>{{ f.analysis | date}}</td>
+                <td>{{ f.analysis_status}}</td>
+                <td>{{ f.analysis_desc}}</td>
+                <td>{{ f.follow_up | date}}</td>
+                <td>{{ f.follow_status}}</td>
+                <td>{{ f.follow_desc}}</td>
+                <td>{{ f.accounting | date}}</td>
+                <td>{{ f.acc_status}}</td>
+                <td>{{ f.acc_desc}}</td>
+                <td>{{ f.admin | date}}</td>
+                <td>{{ f.admin_status}}</td>
+                <td>{{ f.admin_desc}}</td>
+                <td>{{ f.closure | date}}</td>
+
             </tr>
         </tbody>
     </table>
@@ -127,4 +140,4 @@
     </div>
 
 
-</div> -->
+</div>

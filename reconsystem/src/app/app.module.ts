@@ -33,6 +33,7 @@ import { MatMenuModule} from '@angular/material/menu';
 import { AddRecon, ReconComponent, UpdateRecon} from './components/recon/recon.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { MatStepperModule} from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
 
 const MY_FORMATS = {
   parse: {
@@ -89,7 +90,8 @@ const MY_FORMATS = {
     MatSortModule,
     MatSnackBarModule,
     MatMenuModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule
   
 
   ],
