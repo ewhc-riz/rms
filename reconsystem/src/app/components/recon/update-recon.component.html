@@ -6,15 +6,17 @@
       enctype="multipart/form-data"
       class="col-md-12"
     >
-    <div class="row">
-      <mat-form-field
+      <div class="row">
+        <mat-form-field
           appearance="outline"
           floatLabel="always"
           class="col-md-6 pt-3"
         >
           <mat-label><b>Hospital Name</b></mat-label>
           <input
-            [ngClass]="{ 'is-invalid': formHospital.controls['hospital'].errors }"
+            [ngClass]="{
+              'is-invalid': formHospital.controls['hospital'].errors
+            }"
             formControlName="hospital"
             matInput
             type="text"
@@ -23,92 +25,100 @@
           />
         </mat-form-field>
         <mat-form-field
-        color="accent"
-        appearance="outline"
-        floatLabel="always"
-        class="col-md-4 pt-3"
-      >
-        <!-- [matDatepickerFilter]="myFilter" -->
-        <mat-label><b>Date Received</b></mat-label>
-        <input
-          [ngClass]="{ 'is-invalid': formHospital.controls['date_emailed'].errors }"
-          matInput
-          [matDatepicker]="emailedpicker"
-          placeholder="Choose Date"
-          formControlName="date_emailed"
-          name="date_emailed"          
-        />
-        <mat-datepicker-toggle
-          matSuffix
-          [for]="emailedpicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #emailedpicker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div>
-      <div class="row">
-        <mat-form-field
-          appearance="outline"
-          floatLabel="always"
-          class="col-md-6 pt-3"
-        >
-          <mat-label><b>Amount</b></mat-label>
-          <input
-            [ngClass]="{ 'is-invalid': formHospital.controls['amount'].errors }"
-            matInput
-            type="text"
-            class="form-control"
-            formControlName="amount"
-          />
-        </mat-form-field>
-        <mat-form-field
           color="accent"
           appearance="outline"
           floatLabel="always"
           class="col-md-4 pt-3"
         >
-          <mat-label><b>Suspension Date</b></mat-label>
+          <!-- [matDatepickerFilter]="myFilter" -->
+          <mat-label><b>Date Received</b></mat-label>
           <input
-            [ngClass]="{ 'is-invalid': formHospital.controls['suspension'].errors }"
+            [ngClass]="{
+              'is-invalid': formHospital.controls['date_emailed'].errors
+            }"
             matInput
-            [matDatepicker]="suspensionpicker"
+            [matDatepicker]="emailedpicker"
             placeholder="Choose Date"
-            formControlName="suspension"
-            name="suspension"
+            formControlName="date_emailed"
+            name="date_emailed"
           />
           <mat-datepicker-toggle
             matSuffix
-            [for]="suspensionpicker"
+            [for]="emailedpicker"
           ></mat-datepicker-toggle>
-          <mat-datepicker #suspensionpicker></mat-datepicker>
+          <mat-datepicker #emailedpicker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="row">
-        <mat-form-field
-          color="accent"
-          appearance="outline"
-          floatLabel="always"
-          class="col-md-4 pt-3"
-        >
-          <mat-label><b>Due Date</b></mat-label>
-          <input
-            [ngClass]="{ 'is-invalid': formHospital.controls['due_date'].errors }"
-            matInput
-            [matDatepicker]="duepicker"
-            placeholder="Choose Date"
-            formControlName="due_date"
-            name="due_date"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="duepicker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #duepicker></mat-datepicker>
-        </mat-form-field>
-      </div>
+      <div>
+        <div class="row">
+          <mat-form-field
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-6 pt-3"
+          >
+            <mat-label><b>Amount</b></mat-label>
+            <input
+              [ngClass]="{
+                'is-invalid': formHospital.controls['amount'].errors
+              }"
+              matInput
+              type="text"
+              class="form-control"
+              formControlName="amount"
+            />
+          </mat-form-field>
+          <mat-form-field
+            color="accent"
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-4 pt-3"
+          >
+            <mat-label><b>Suspension Date</b></mat-label>
+            <input
+              [ngClass]="{
+                'is-invalid': formHospital.controls['suspension'].errors
+              }"
+              matInput
+              [matDatepicker]="suspensionpicker"
+              placeholder="Choose Date"
+              formControlName="suspension"
+              name="suspension"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="suspensionpicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #suspensionpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field
+            color="accent"
+            appearance="outline"
+            floatLabel="always"
+            class="col-md-4 pt-3"
+          >
+            <mat-label><b>Due Date</b></mat-label>
+            <input
+              [ngClass]="{
+                'is-invalid': formHospital.controls['due_date'].errors
+              }"
+              matInput
+              [matDatepicker]="duepicker"
+              placeholder="Choose Date"
+              formControlName="due_date"
+              name="due_date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="duepicker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #duepicker></mat-datepicker>
+          </mat-form-field>
+        </div>
       </div>
     </form>
-    <button type="submit" matStepperNext mat-raised-button>Next</button> 
+      <button type="submit" matStepperNext mat-raised-button>Next</button>
   </mat-step>
   <mat-step [stepControl]="formAck" label="Acknowledgement" #step2>
     <form [formGroup]="formAck" class="col-md-12">
@@ -142,10 +152,13 @@
           class="col-md-3 pt-3"
         >
           <mat-label><b>Acknowledgement</b></mat-label>
-          <mat-select formControlName="ack_status"
-          [ngClass]="{ 'is-invalid': formAck.controls['ack_status'].errors }"
+          <mat-select
+            formControlName="ack_status"
+            [ngClass]="{ 'is-invalid': formAck.controls['ack_status'].errors }"
           >
-            <mat-option value="Email Acknowledgement"> Email Acknowledgement </mat-option>
+            <mat-option value="Email Acknowledgement">
+              Email Acknowledgement
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field
@@ -156,7 +169,7 @@
         >
           <mat-label><b>Description</b></mat-label>
           <input
-           [ngClass]="{ 'is-invalid': formAck.controls['ack_desc'].errors }"
+            [ngClass]="{ 'is-invalid': formAck.controls['ack_desc'].errors }"
             matInput
             formControlName="ack_desc"
             name="ack_desc"
@@ -164,9 +177,9 @@
         </mat-form-field>
       </div>
     </form>
-    <button type="submit" matStepperNext mat-raised-button>Next</button> 
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
   </mat-step>
-  <mat-step [stepControl]="formAnalysis" label="Analysis" #step3> 
+  <mat-step [stepControl]="formAnalysis" label="Analysis" #step3>
     <form [formGroup]="formAnalysis" class="table-responsive mb-4">
       <div class="row">
         <mat-form-field
@@ -196,7 +209,26 @@
       </button>
       <ng-container formArrayName="analysisRows">
         <table mat-table #tableAnalysis [dataSource]="analysisDataSource">
-          
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef [hidden]="true">
+              ID
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row; let i = index"
+              [formGroup]="row"
+              [hidden]="true"
+            >
+              <mat-form-field class="col-md-3">
+                <input
+                  matInput
+                  formControlName="id"
+                  [ngClass]="{ 'is-invalid': formAnalysis.controls['id'] }"
+                  class="text-center"
+                  readonly
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
           <ng-container matColumnDef="analysis_status">
             <mat-header-cell *matHeaderCellDef style="width: 100px !important">
               Status / Action plan
@@ -205,15 +237,13 @@
               <select
                 class="form-select form-select-sm"
                 formControlName="analysis_status"
-                [ngClass]="{ 'is-invalid': formAnalysis.controls['analysis_status'] }"
+                [ngClass]="{
+                  'is-invalid': formAnalysis.controls['analysis_status']
+                }"
               >
                 <option value="">Please Select</option>
-                <option value="Team 30 Days">
-                  Team 30 Days
-                </option>
-                <option value="Team 15 Days">
-                  Team 15 Days
-                </option>
+                <option value="Team 30 Days">Team 30 Days</option>
+                <option value="Team 15 Days">Team 15 Days</option>
                 <option value="Endorsed to I.T">Endorsed to I.T</option>
                 <option value="Request to Accounting">
                   Request to Accounting
@@ -228,8 +258,13 @@
             <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
             <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
               <mat-form-field class="col-md-12">
-                <input matInput formControlName="analysis_desc"
-                [ngClass]="{ 'is-invalid': formAnalysis.controls['analysis_desc'] }" />
+                <input
+                  matInput
+                  formControlName="analysis_desc"
+                  [ngClass]="{
+                    'is-invalid': formAnalysis.controls['analysis_desc']
+                  }"
+                />
               </mat-form-field>
             </mat-cell>
           </ng-container>
@@ -246,9 +281,286 @@
     </form>
     <button type="submit" matStepperNext mat-raised-button>Next</button>
   </mat-step>
+  <mat-step [stepControl]="formFollowUp" label="Follow-Up" #step4>
+    <form [formGroup]="formFollowUp" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Follow-up Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="followpicker"
+            placeholder="Choose Date"
+            formControlName="follow_up"
+            name="follow_up"
+            [ngClass]="{ 'is-invalid': formFollowUp.controls['follow_up'].errors }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="followpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #followpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Follow Up</b></mat-label>
+          <mat-select
+            formControlName="follow_status"
+            [ngClass]="{ 'is-invalid': formFollowUp.controls['follow_status'] }"
+          >
+            <mat-option value="On Going Recon"> On Going Recon</mat-option>
+            <mat-option value="Request for Extension">
+              Request for Extension</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+        >
+          <mat-label><b>Description</b></mat-label>
+          <input
+            matInput
+            formControlName="follow_desc"
+            name="follow_desc"
+            [ngClass]="{ 'is-invalid': formFollowUp.controls['follow_desc'] }"
+          />
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" color="accent" mat-raised-button (click)="updateRecon()">
+      <i class="fa-solid fa-check"></i> Submit
+    </button>
+  </mat-step>
+  <mat-step [stepControl]="formAccounting" label="Accounting" #step5>
+    <form [formGroup]="formAccounting" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Accounting Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="accountingpicker"
+            placeholder="Choose Date"
+            formControlName="accounting"
+            name="accounting"
+            [ngClass]="{ 'is-invalid': formAccounting.controls['accounting'] }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="accountingpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #accountingpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button (click)="addAccounting()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add New
+      </button>
 
-  <mat-step label="Follow-Up" #step4> </mat-step>
-  <mat-step label="Accounting" #step5> </mat-step>
-  <mat-step label="Admin" #step6> </mat-step>
-  <mat-step label="Closure" #step7> </mat-step>
+      <ng-container formArrayName="accountingRows">
+        <table mat-table #tableAccounting [dataSource]="accountingDatasource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef [hidden]="true">
+              ID
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row; let i = index"
+              [formGroup]="row"
+              [hidden]="true"
+            >
+              <mat-form-field class="col-md-3">
+                <input
+                  matInput
+                  formControlName="id"
+                  
+                  class="text-center"
+                  readonly
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="acc_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="acc_status"
+                [ngClass]="{ 'is-invalid': formAccounting.controls['acc_status']}"
+              >
+                <option value="">Please Select</option>
+                <option value="Check Releasing">Check Releasing</option>
+                <option value="For Signing">For Signing</option>
+                <option value="Proof of Payment">Proof of Payment</option>
+                <option value="Clearing Cheque Date">
+                  Clearing Cheque Date
+                </option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="acc_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="acc_desc" 
+                [ngClass]="{ 'is-invalid': formAccounting.controls['acc_desc']}" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="accColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: accColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+    <button type="submit" color="accent" mat-raised-button (click)="updateRecon()">
+      <i class="fa-solid fa-check"></i> Submit
+    </button>
+  </mat-step>
+  <mat-step [stepControl]="formAdmin" label="Admin" #step6> 
+    <form [formGroup]="formAdmin" class="table-responsive mb-4">
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-3 pt-3"
+        >
+          <mat-label><b>Admin Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="adminpicker"
+            placeholder="Choose Date"
+            formControlName="admin"
+            name="admin"
+            [ngClass]="{ 'is-invalid': formAdmin.controls['admin'] }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="adminpicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #adminpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button (click)="addAdmin()" class="mb-4">
+        <i class="fa-solid fa-plus"></i> Add
+      </button>
+
+      <ng-container formArrayName="adminRows">
+        <table mat-table #tableAdmin [dataSource]="adminDatasource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef [hidden]="true">
+              ID
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row; let i = index"
+              [formGroup]="row"
+              [hidden]="true"
+            >
+              <mat-form-field class="col-md-3">
+                <input
+                  matInput
+                  formControlName="id"
+                  [ngClass]="{ 'is-invalid': formAdmin.controls['id'] }"
+                  class="text-center"
+                  readonly
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="admin_status">
+            <mat-header-cell *matHeaderCellDef style="width: 100px !important">
+              Status / Action plan
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <select
+                class="form-select form-select-sm"
+                formControlName="admin_status"
+                [ngClass]="{ 'is-invalid': formAdmin.controls['admin_status'] }"
+              >
+                <option value="">Please Select</option>
+                <option value="Courier Messenger">Courier Messenger</option>
+                <option value="Collector">Collector</option>
+                <option value="Outsource">Outsource</option>
+              </select>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="admin_desc">
+            <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+            <mat-cell *matCellDef="let row; let i = index" [formGroup]="row">
+              <mat-form-field class="col-md-12">
+                <input matInput formControlName="admin_desc"
+                [ngClass]="{ 'is-invalid': formAdmin.controls['admin_desc'] }" />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row
+            *matHeaderRowDef="adminColumns"
+            style="color: blue"
+          ></mat-header-row>
+          <mat-row
+            [@rowsAnimation]=""
+            *matRowDef="let row; columns: adminColumns"
+          ></mat-row>
+        </table>
+      </ng-container>
+    </form>
+    <button type="submit" matStepperNext mat-raised-button>Next</button>
+  </mat-step>
+  <mat-step label="Closure" #step7>
+    <form
+      [formGroup]="formClosure"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div class="row">
+        <mat-form-field
+          color="accent"
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-4 pt-3"
+        >
+          <mat-label><b>Closure Date</b></mat-label>
+          <input
+            matInput
+            [matDatepicker]="closurepicker"
+            placeholder="Choose Date"
+            formControlName="closure"
+            name="closure"
+            [ngClass]="{ 'is-invalid': formClosure.controls['closure'] }"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="closurepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #closurepicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+    <button type="submit" color="accent" mat-raised-button (click)="updateRecon()">
+      <i class="fa-solid fa-check"></i> Submit
+    </button>
+   </mat-step>
 </mat-stepper>

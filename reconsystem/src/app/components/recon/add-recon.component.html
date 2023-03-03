@@ -34,13 +34,24 @@
             name="myControl"
             required
           />
-          <button *ngIf="this.formHospital.controls['hospital'].value" matSuffix mat-icon-button
-          aria-label="Clear" (click)="this.formHospital.controls['hospital'].setValue('')">
-          <mat-icon>close</mat-icon>
+          <button
+            *ngIf="this.formHospital.controls['hospital'].value"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="this.formHospital.controls['hospital'].setValue('')"
+          >
+            <mat-icon>close</mat-icon>
           </button>
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayHospitalName">
-            <mat-option *ngFor="let fh of filteredHospitalList | async" [value]="fh">
-              {{fh.hospital_name}}
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            [displayWith]="displayHospitalName"
+          >
+            <mat-option
+              *ngFor="let fh of filteredHospitalList | async"
+              [value]="fh"
+            >
+              {{ fh.hospital_name }}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
@@ -53,11 +64,13 @@
           <!-- [matDatepickerFilter]="myFilter" -->
           <mat-label><b>Date Received</b></mat-label>
           <input
+            
             matInput
             [matDatepicker]="emailedpicker"
             placeholder="Choose Date"
             formControlName="date_emailed"
             name="date_emailed"
+            [(ngModel)]="dateEmailed"
             required
           />
           <mat-datepicker-toggle
@@ -117,6 +130,7 @@
               placeholder="Choose Date"
               formControlName="due_date"
               name="due_date"
+            
             />
             <mat-datepicker-toggle
               matSuffix
@@ -125,7 +139,9 @@
             <mat-datepicker #duepicker></mat-datepicker>
           </mat-form-field>
         </div>
-        <button type="submit" matStepperNext mat-raised-button>Next</button>
+        <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+          <i class="fa-solid fa-check"></i> Submit
+        </button>
       </div>
     </form>
   </mat-step>
@@ -162,7 +178,9 @@
         >
           <mat-label><b>Acknowledgement</b></mat-label>
           <mat-select formControlName="ack_status">
-            <mat-option value="Email Acknowledgement"> Email Acknowledgement </mat-option>
+            <mat-option value="Email Acknowledgement">
+              Email Acknowledgement
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field
@@ -172,11 +190,7 @@
           class="col-md-6 pt-3"
         >
           <mat-label><b>Description</b></mat-label>
-          <input
-            matInput
-            formControlName="ack_desc"
-            name="ack_desc"
-          />
+          <input matInput formControlName="ack_desc" name="ack_desc" />
         </mat-form-field>
       </div>
     </form>
@@ -212,13 +226,24 @@
       </button>
       <ng-container formArrayName="analysisRows">
         <table mat-table #tableAnalysis [dataSource]="analysisDataSource">
-            <ng-container matColumnDef="id">
-              <mat-header-cell *matHeaderCellDef [hidden]="true"> ID </mat-header-cell>
-              <mat-cell *matCellDef="let row; let i = index" [formGroup]="row" [hidden]="true">
-                  <mat-form-field class="col-md-3">
-                      <input matInput formControlName="id" class="text-center" readonly>
-                  </mat-form-field>
-              </mat-cell>
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef [hidden]="true">
+              ID
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row; let i = index"
+              [formGroup]="row"
+              [hidden]="true"
+            >
+              <mat-form-field class="col-md-3">
+                <input
+                  matInput
+                  formControlName="id"
+                  class="text-center"
+                  readonly
+                />
+              </mat-form-field>
+            </mat-cell>
           </ng-container>
           <ng-container matColumnDef="analysis_status">
             <mat-header-cell *matHeaderCellDef style="width: 100px !important">
@@ -230,12 +255,8 @@
                 formControlName="analysis_status"
               >
                 <option value="">Please Select</option>
-                <option value="Team 30 Days">
-                  Team 30 Days
-                </option>
-                <option value="Team 15 Days">
-                  Team 15 Days
-                </option>
+                <option value="Team 30 Days">Team 30 Days</option>
+                <option value="Team 15 Days">Team 15 Days</option>
                 <option value="Endorsed to I.T">Endorsed to I.T</option>
                 <option value="Request to Accounting">
                   Request to Accounting
@@ -300,7 +321,9 @@
           <mat-label><b>Follow Up</b></mat-label>
           <mat-select formControlName="follow_status">
             <mat-option value="On Going Recon"> On Going Recon</mat-option>
-            <mat-option value="Request for Extension"> Request for Extension</mat-option>
+            <mat-option value="Request for Extension">
+              Request for Extension</mat-option
+            >
           </mat-select>
         </mat-form-field>
         <mat-form-field
@@ -310,11 +333,7 @@
           class="col-md-6 pt-3"
         >
           <mat-label><b>Description</b></mat-label>
-          <input
-            matInput
-            formControlName="follow_desc"
-            name="follow_desc"
-          />
+          <input matInput formControlName="follow_desc" name="follow_desc" />
         </mat-form-field>
       </div>
     </form>
@@ -350,6 +369,25 @@
 
       <ng-container formArrayName="accountingRows">
         <table mat-table #tableAccounting [dataSource]="accountingDatasource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef [hidden]="true">
+              ID
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let row; let i = index"
+              [formGroup]="row"
+              [hidden]="true"
+            >
+              <mat-form-field class="col-md-3">
+                <input
+                  matInput
+                  formControlName="id"
+                  class="text-center"
+                  readonly
+                />
+              </mat-form-field>
+            </mat-cell>
+          </ng-container>
           <ng-container matColumnDef="acc_status">
             <mat-header-cell *matHeaderCellDef style="width: 100px !important">
               Status / Action plan
@@ -360,12 +398,8 @@
                 formControlName="acc_status"
               >
                 <option value="">Please Select</option>
-                <option value="Check Releasing">
-                  Check Releasing
-                </option>
-                <option value="For Signing">
-                  For Signing
-                </option>
+                <option value="Check Releasing">Check Releasing</option>
+                <option value="For Signing">For Signing</option>
                 <option value="Proof of Payment">Proof of Payment</option>
                 <option value="Clearing Cheque Date">
                   Clearing Cheque Date
@@ -393,6 +427,9 @@
       </ng-container>
     </form>
     <button type="submit" matStepperNext mat-raised-button>Next</button>
+    <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+      <i class="fa-solid fa-check"></i> Submit
+    </button>
   </mat-step>
   <mat-step [stepControl]="formAdmin" label="Admin" #step6>
     <form [formGroup]="formAdmin" class="table-responsive mb-4">
@@ -419,7 +456,7 @@
         </mat-form-field>
       </div>
       <button mat-raised-button (click)="addAdmin()" class="mb-4">
-        <i class="fa-solid fa-plus"></i> Add 
+        <i class="fa-solid fa-plus"></i> Add
       </button>
 
       <ng-container formArrayName="adminRows">
@@ -434,12 +471,8 @@
                 formControlName="admin_status"
               >
                 <option value="">Please Select</option>
-                <option value="Courier Messenger">
-                  Courier Messenger
-                </option>
-                <option value="Collector">
-                  Collector
-                </option>
+                <option value="Courier Messenger">Courier Messenger</option>
+                <option value="Collector">Collector</option>
                 <option value="Outsource">Outsource</option>
               </select>
             </mat-cell>
@@ -494,8 +527,8 @@
         </mat-form-field>
       </div>
     </form>
-    <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+    <!-- <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
       <i class="fa-solid fa-check"></i> Submit
-    </button>
+    </button> -->
   </mat-step>
 </mat-stepper>

@@ -200,7 +200,7 @@
         <a [routerLink]="['/main']"><i class="fa-solid fa-home"></i> Dashboard</a>
         <hr />
       </li>
-      <li routerLinkActive="active" *ngIf="this.isLogin">
+      <li routerLinkActive="active" *ngIf="this.isLogin && userInfo.user_level !== 'GUEST' && 'BASIC USER'">
         <a [routerLink]="['/recon']"><i class="fa fa-plus"></i> Add Recon</a>
       </li>
       <!-- <li routerLinkActive="active" *ngIf="this.isLogin">
@@ -219,7 +219,7 @@
           <i class="fa-sharp fa-solid fa-people-group"></i> 
           Agents & Brokers</a>
       </li> -->
-      <li routerLinkActive="active" *ngIf="this.isLogin && userInfo.user_level == 'ADMINISTRATOR'">
+      <li routerLinkActive="active" *ngIf="this.isLogin && userInfo.user_level == 'ADMINISTRATOR' && 'BASIC USER'">
         <a [routerLink]="['/users']"><i class="fa fa-user-plus"></i> Users</a>
       </li>
 
