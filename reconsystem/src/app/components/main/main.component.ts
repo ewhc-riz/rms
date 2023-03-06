@@ -8,12 +8,15 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import * as Excel from 'exceljs';
+import * as fs from 'file-saver';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
 })
 export class MainComponent implements OnInit {
+  fileName = 'Recon.xlsx';
   hospitalList: any = [];
   allList: any = [];
   filteredList: any = [];
@@ -109,5 +112,12 @@ export class MainComponent implements OnInit {
       f.rownum = index;
     }
     this.config.totalItems = this.filteredList.length;
+  }
+
+  downloadExcel(){
+    let workbook = new Excel.Workbook();
+    let worksheet = workbook.addWorksheet("Recon List");
+
+    console.log("list", this.hospitalList);
   }
 }
