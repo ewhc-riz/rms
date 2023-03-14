@@ -141,8 +141,8 @@ export class UpdateRecon {
     // start Acknowledgement
     this.formAck = this._fb.group({
       ack: new FormControl(''),
-      ack_status: new FormControl(''),
-      ack_desc: new FormControl(''),
+      // ack_status: new FormControl(''),
+      // ack_desc: new FormControl(''),
     });
     // end Acknowledgement
 
@@ -154,6 +154,7 @@ export class UpdateRecon {
     this.analysisList = [];
     this.formAnalysis = this._fb.group({
       analysis: new FormControl(''),
+      link: new FormControl(''),
       analysisRows: this._fb.array(
         this.analysisList.map((val: any) =>
           this._fb.group({
@@ -239,7 +240,7 @@ export class UpdateRecon {
         this._api
           .getTypeRequest('recon/' + routeParams['id'])
           .subscribe((res: any) => {
-            // console.log(res);
+            console.log(res);
             this.reconData = res[0];
 
             (this.formHospital = this._fb.group({
@@ -251,8 +252,8 @@ export class UpdateRecon {
             })),
               (this.formAck = this._fb.group({
                 ack: new FormControl(this.reconData.ack),
-                ack_status: new FormControl(this.reconData.ack_status),
-                ack_desc: new FormControl(this.reconData.ack_desc),
+                // ack_status: new FormControl(this.reconData.ack_status),
+                // ack_desc: new FormControl(this.reconData.ack_desc),
               })),
               this.formAnalysis.patchValue({
                 analysis: this.reconData.analysis,
@@ -520,8 +521,8 @@ export class AddRecon {
     // start Acknowledgement
     this.formAck = this._fb.group({
       ack: new FormControl(''),
-      ack_status: new FormControl(''),
-      ack_desc: new FormControl(''),
+      // ack_status: new FormControl(''),
+      // ack_desc: new FormControl(''),
     });
 
     // end Acknowledgement
@@ -534,6 +535,7 @@ export class AddRecon {
     this.analysisList = [];
     this.formAnalysis = this._fb.group({
       analysis: new FormControl(''),
+      link: new FormControl(''),
       analysisRows: this._fb.array(
         this.analysisList.map((val: any) =>
           this._fb.group({

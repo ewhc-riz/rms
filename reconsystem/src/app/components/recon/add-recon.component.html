@@ -62,9 +62,8 @@
           class="col-md-4 pt-3"
         >
           <!-- [matDatepickerFilter]="myFilter" -->
-          <mat-label><b>Date Received</b></mat-label>
+          <mat-label><b>Received Received</b></mat-label>
           <input
-            
             matInput
             [matDatepicker]="emailedpicker"
             placeholder="Choose Date"
@@ -130,7 +129,6 @@
               placeholder="Choose Date"
               formControlName="due_date"
               name="due_date"
-            
             />
             <mat-datepicker-toggle
               matSuffix
@@ -139,7 +137,12 @@
             <mat-datepicker #duepicker></mat-datepicker>
           </mat-form-field>
         </div>
-        <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+        <button
+          type="submit"
+          color="accent"
+          mat-raised-button
+          (click)="addRecon()"
+        >
           <i class="fa-solid fa-check"></i> Submit
         </button>
       </div>
@@ -170,7 +173,7 @@
           <mat-datepicker #accpicker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <mat-form-field
           appearance="outline"
           floatLabel="always"
@@ -192,7 +195,7 @@
           <mat-label><b>Description</b></mat-label>
           <input matInput formControlName="ack_desc" name="ack_desc" />
         </mat-form-field>
-      </div>
+      </div> -->
     </form>
     <button type="submit" matStepperNext mat-raised-button>Next</button>
   </mat-step>
@@ -219,6 +222,21 @@
             [for]="analysispicker"
           ></mat-datepicker-toggle>
           <mat-datepicker #analysispicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          floatLabel="always"
+          class="col-md-6 pt-3"
+          [hidden]="true"
+        >
+          <mat-label><b>File Link</b></mat-label>
+          <input
+            matInput
+            type="text"
+            class="form-control"
+            formControlName="link"
+            [hidden]="true"
+          />
         </mat-form-field>
       </div>
       <button mat-raised-button (click)="addAnalysis()" class="mb-4">
@@ -398,11 +416,10 @@
                 formControlName="acc_status"
               >
                 <option value="">Please Select</option>
-                <option value="Check Releasing">Check Releasing</option>
-                <option value="For Signing">For Signing</option>
-                <option value="Proof of Payment">Proof of Payment</option>
-                <option value="Clearing Cheque Date">
-                  Clearing Cheque Date
+                <option value="For Closure">For Closure</option>
+                <option value="For Check Process">For Check Process</option>
+                <option value="For Signing / Approve">
+                  For Signing / Approve
                 </option>
               </select>
             </mat-cell>
@@ -427,9 +444,6 @@
       </ng-container>
     </form>
     <button type="submit" matStepperNext mat-raised-button>Next</button>
-    <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
-      <i class="fa-solid fa-check"></i> Submit
-    </button>
   </mat-step>
   <mat-step [stepControl]="formAdmin" label="Admin" #step6>
     <form [formGroup]="formAdmin" class="table-responsive mb-4">
@@ -471,8 +485,9 @@
                 formControlName="admin_status"
               >
                 <option value="">Please Select</option>
-                <option value="Courier Messenger">Courier Messenger</option>
+                <option value="Courier">Courier</option>
                 <option value="Collector">Collector</option>
+                <option value="Deliver">Deliver</option>
                 <option value="Outsource">Outsource</option>
               </select>
             </mat-cell>
@@ -527,8 +542,8 @@
         </mat-form-field>
       </div>
     </form>
-    <!-- <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
+    <button type="submit" color="accent" mat-raised-button (click)="addRecon()">
       <i class="fa-solid fa-check"></i> Submit
-    </button> -->
+    </button>
   </mat-step>
 </mat-stepper>

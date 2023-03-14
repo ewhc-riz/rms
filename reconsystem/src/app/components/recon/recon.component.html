@@ -4,13 +4,13 @@
       <button mat-raised-button (click)="openDialog()" class="mb-4">
         <i class="fa-sharp fa-solid fa-plus"></i> New
       </button>
-      <button
+      <!-- <button
         type="button"
         class="btn btn-sm btn-dark"
         style="float:right"
       >
         <i class="fa fa-upload" aria-hidden="true"></i> Upload Multiple
-      </button>
+      </button> -->
     </div>
   </div>
   <div class="table-responsive" style="padding-top: 10px">
@@ -23,8 +23,6 @@
           <th>Suspension</th>
           <th>Due Date</th>
           <th>Acknowledgement</th>
-          <th>Acknowledgement Status</th>
-          <th>Acknowledgement Description</th>
           <th>Analysis</th>
           <th>Analysis Status</th>
           <th>Analysis Description</th>
@@ -52,8 +50,6 @@
           <td>{{ recon.suspension | date }}</td>
           <td style="color:red">{{ recon.due_date | date}}</td>
           <td>{{ recon.ack | date}}</td>
-          <td>{{ recon.ack_status }}</td>
-          <td>{{ recon.ack_desc }}</td>
           <td>{{ recon.analysis | date}}</td>
           <td>{{ recon.analysis_status}}</td>
           <td>{{ recon.analysis_desc}}</td>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormControl,
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
@@ -10,6 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import * as Excel from 'exceljs';
 import * as fs from 'file-saver';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-main',
@@ -32,6 +35,9 @@ export class MainComponent implements OnInit {
 
   userInfo: any;
   isLogin: boolean = false;
+
+  tblDataSource: MatTableDataSource<any>;
+  columnsToDisplay: string[];
 
   searchForm: UntypedFormGroup = new UntypedFormGroup({
     hospitalName: new UntypedFormControl(),
@@ -70,17 +76,19 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.userInfo = this._auth.getUserInfo();
     this.searchForm = this.formBuilder.group({
-      hospitalName: '',
-      fromDate: '',
-      toDate: '',
+      hospitalName: new FormControl(''),
+      fromDate: new FormControl(''),
+      toDate: new FormControl(''),
     });
     this._api.getTypeRequest('recon/').subscribe((res: any) => {
       //console.log(res[0]);
       this.hospitalList = res[0];
+      // console.log("??result", this.hospitalList)
       this.totalRecords = this.hospitalList.length;
+
       let index = 0;
 
-      for (let f of this.hospitalList) {
+      for (let f of this.filteredList) {
         index++;
         f.rownum = index;
       }
@@ -97,11 +105,9 @@ export class MainComponent implements OnInit {
     console.log(this.selectedFromDate);
     console.log(this.selectedToDate);
 
-    
     this.filteredList = [
       ...this.hospitalList.filter(
         (f: any) =>
-          
           f.date_emailed >= this.selectedFromDate &&
           f.date_emailed <= this.selectedToDate
       ),
@@ -114,10 +120,51 @@ export class MainComponent implements OnInit {
     this.config.totalItems = this.filteredList.length;
   }
 
-  downloadExcel(){
+  downloadExcel() {
     let workbook = new Excel.Workbook();
-    let worksheet = workbook.addWorksheet("Recon List");
+    let worksheet = workbook.addWorksheet('Recon List');
 
-    console.log("list", this.hospitalList);
+    let header = [
+      'id',
+      'Hospital',
+      'Date Emailed',
+      'Amount',
+      'Suspension',
+      'Due Date',
+      'Acknowledgement',
+      'Analysis',
+      'Analysis Status',
+      'Anylysis Description',
+      'Follow-up Email',
+      'Follow-up Status',
+      'Follow-up Description',
+      'Accounting',
+      'Accounting Status',
+      'Accounting Description',
+      'Admin',
+      'Admin Status',
+      'Admin Description',
+      'Closure'
+    ];
+    let headerRow = worksheet.addRow(header);
+
+    for (let recon of this.hospitalList) {
+      let rec = Object.keys(recon);
+      let temp = [];
+      for (let y of rec) {
+        temp.push(recon[y]);
+      }
+      worksheet.addRow(temp);
+    }
+
+    let fileName = 'Recon';
+
+    //add data and file name and download
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      fs.saveAs(blob, fileName + '.xlsx');
+    });
   }
 }

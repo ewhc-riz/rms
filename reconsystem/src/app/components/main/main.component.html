@@ -35,7 +35,7 @@
             class="fa-solid fa-magnifying-glass" (click)="filterList()"></i></button>
 
     <button type="button" data-bs-toggle="tooltip" data-bs-title="Download Excel" class="btn btn-dark"><i
-            class="fa-solid fa-file-excel" (click)="downloadExcel()"></i></button>
+            class="fa-solid fa-download" (click)="downloadExcel()"></i></button>
 </form>
 <div class="table-responsive">
     <table class="table table-sm" style="font-size: small;">
@@ -47,8 +47,6 @@
                 <th>Suspension</th>
                 <th>Due Date</th>
                 <th>Acknowledgement</th>
-                <th>Acknowledgement Status</th>
-                <th>Acknowledgement Description</th>
                 <th>Analysis</th>
                 <th>Analysis Status</th>
                 <th>Analysis Description</th>
@@ -65,15 +63,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let f of filteredList  | paginate : config; ">
+            <tr *ngFor="let f of hospitalList  | paginate : config; ">
                 <td class="stickycol">{{f.hospital}}</td>
                 <td>{{f.date_emailed | date}}</td>
                 <td>{{ f.amount }}</td>
                 <td>{{ f.suspension | date }}</td>
                 <td style="color:red">{{ f.due_date | date}}</td>
                 <td>{{ f.ack | date}}</td>
-                <td>{{ f.ack_status }}</td>
-                <td>{{ f.ack_desc }}</td>
                 <td>{{ f.analysis | date}}</td>
                 <td>{{ f.analysis_status}}</td>
                 <td>{{ f.analysis_desc}}</td>
@@ -141,3 +137,4 @@
 
 
 </div>
+

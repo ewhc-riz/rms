@@ -57,8 +57,8 @@ router.post("/login", async function (req, res, next) {
       //   console.log(result);
       if (result.length == 0) {
         res.send({ status: 0, data: err });
-        //  console.log(username.toString());
-        // console.log(hashed_password);
+        //  console.log(firstname.toString());
+        console.log(hashed_password);
       } else if (err) {
         console.log(err.message);
       } else {
@@ -151,7 +151,7 @@ router.get("/:id", async function (req, res, next) {
       //  console.log(result);
       if (result.length == 0) {
         res.send({ status: 0, data: err });
-        //  console.log(username.toString());
+        // console.log(username.toString());
         // console.log(hashed_password);
       } else if (err) {
         console.log(err.message);

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "franchisingSystem": {
+    "reconManagementSystem": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/franchising-system",
+            "outputPath": "dist/recon-system",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,6 +30,12 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
+            "allowedCommonJsDependencies": [
+              "lodash",
+              "moment",
+              "exceljs",
+              "file-saver"
+           ],
             "scripts": [
              
             ]
@@ -71,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "franchisingSystem:build:production"
+              "browserTarget": "reconManagementSystem:build:production"
             },
             "development": {
-              "browserTarget": "franchisingSystem:build:development"
+              "browserTarget": "reconManagementSystem:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "franchisingSystem:build"
+            "browserTarget": "reconManagementSystem:build"
           }
         },
         "test": {
@@ -106,5 +112,5 @@
       }
     }
   },
-  "defaultProject": "franchisingSystem"
+  "defaultProject": "reconManagementSystem"
 }
